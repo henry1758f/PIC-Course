@@ -198,6 +198,10 @@ void num_print(long value,int pos,int line)
     temp = value;
 
     LCD_Cursor_New(line, pos);
+    
+    
+    
+    /*
     if(temp/10000 == 0)
     {
         if( (temp%10000)/1000 == 0 )
@@ -257,6 +261,9 @@ void num_print(long value,int pos,int line)
         LCD_Cursor_New(line, --pos);
         putcLCD( num2char(temp%10) );
     }  
+    */
+    
+    
     
 }
 
@@ -318,7 +325,12 @@ int main(void)
         
         while(input_status == 0)
         {
-            wait_key_over;
+            if( (intemp == keypad_task() ) && intemp != -1 )    
+            {
+                wait_key_over;
+            }
+            
+            
             intemp = keypad_task();
             
             if(firstA && intemp<10 && intemp != -1 )
