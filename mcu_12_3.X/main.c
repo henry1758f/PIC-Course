@@ -201,7 +201,7 @@ void num_print(long value,int pos,int line)
     
     
     
-    /*
+    
     if(temp/10000 == 0)
     {
         if( (temp%10000)/1000 == 0 )
@@ -261,7 +261,7 @@ void num_print(long value,int pos,int line)
         LCD_Cursor_New(line, --pos);
         putcLCD( num2char(temp%10) );
     }  
-    */
+    
     
     
     
