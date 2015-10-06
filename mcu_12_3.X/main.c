@@ -25,9 +25,11 @@ _FICD(0xC2);
 #define START_str "Press a number"  //15
 #define Clear_str    "                    " //21
 #define Toolong_str1 "Number must between " //21
-#define Toolong_str2 " -32768 to +32767   " //21
+#define Toolong_str2 " -2147483648 ~      " //21
+#define Toolong_str3 "      +2147483647   " //21
 #define Overflow_str "Overflow!" //10
 #define notAnumber "This is not a number! " //21
+#define reinput_str "Re-enter your value. "
 
 //Global variables
 long             numA,numB,numC,numD;
@@ -194,91 +196,87 @@ int num_m2v(int value[6])
 void num_print(long value,int pos,int line)
 {
     //char temp1,temp2,temp3,temp4,temp5,temp6,temp;
+    /* In XC16 compiler ,long type has 32 bits, value from -2,147,483,648 ~ +2,147,483,647*/
     long temp;
-    temp = value;
-
-    LCD_Cursor_New(line, pos);
-    
-    
-    
-    
-    if(temp/10000 == 0)
+    unsigned char numcount = 0,forcount;
+    if(value < 0)
     {
-        if( (temp%10000)/1000 == 0 )
-        {
-            if( (temp%1000)/100 == 0 )
-            {
-                if( (temp%100)/10 == 0 )
-                {
-                    putcLCD( num2char(temp%10) );
-                }
-                else
-                {
-                    putcLCD( num2char(temp%10) );
-                    temp = temp/10;
-                    LCD_Cursor_New(line, --pos);
-                    putcLCD( num2char(temp%10) );
-                }
-            }
-            else
-            {
-                putcLCD( num2char(temp%10) );
-                temp = temp/10;
-                LCD_Cursor_New(line, --pos);
-                putcLCD( num2char(temp%10) );
-                temp = temp/10;
-                LCD_Cursor_New(line, --pos);
-                putcLCD( num2char(temp%10) );
-            }
-        }
-        else
-        {
-            putcLCD( num2char(temp%10) );
-            temp = temp/10;
-            LCD_Cursor_New(line, --pos);
-            putcLCD( num2char(temp%10) );
-            temp = temp/10;
-            LCD_Cursor_New(line, --pos);
-            putcLCD( num2char(temp%10) );
-            temp = temp/10;
-            LCD_Cursor_New(line, --pos);
-            putcLCD( num2char(temp%10) );
-        }
+        temp = value*(-1);
     }
     else
     {
-         putcLCD( num2char(temp%10) );
-        temp = temp/10;
-        LCD_Cursor_New(line, --pos);
-        putcLCD( num2char(temp%10) );
-        temp = temp/10;
-        LCD_Cursor_New(line, --pos);
-        putcLCD( num2char(temp%10) );
-        temp = temp/10;
-        LCD_Cursor_New(line, --pos);
-        putcLCD( num2char(temp%10) );
-        temp = temp/10;
-        LCD_Cursor_New(line, --pos);
-        putcLCD( num2char(temp%10) );
-    }  
+        temp = value;
+    }
+
+    LCD_Cursor_New(line, pos);
     
-    
-    
+    if(temp > 999999999)
+    {
+        numcount = 10;
+    }
+    else if(temp > 99999999)
+    {
+        numcount = 9;
+    }
+    else if(temp > 9999999)
+    {
+        numcount = 8;
+    }
+    else if(temp > 999999)
+    {
+        numcount = 7;
+    }
+    else if(temp > 99999)
+    {
+        numcount = 6;
+    }
+    else if(temp > 9999)
+    {
+        numcount = 5;
+    }
+    else if(temp > 999)
+    {
+        numcount = 4;
+    }
+    else if(temp > 99)
+    {
+        numcount = 3;
+    }
+    else if(temp > 9)
+    {
+        numcount = 2;
+    }
+    else if(temp <= 9)
+    {
+        numcount = 1;
+    }
+    for(;numcount >0;numcount--)
+    {
+        LCD_Cursor_New(line, pos);
+        putcLCD( num2char(temp%10) );
+        temp = temp/10;
+        pos--;
+    }
+    if(value < 0)
+    {
+        LCD_Cursor_New(line, pos);
+        putcLCD('-');
+        LATDbits.LATD11 = 0;
+    }
     
 }
 
 void error(int status)
 {
-    if(status == 1)
+    if(status == 1)     //input number too long
     {
-        LCD_Cursor_New(0, 0);
-        putsLCD(Clear_str);
-        LCD_Cursor_New(1, 0);
-        putsLCD(Clear_str);
+        LCD_clear();
         LCD_Cursor_New(0, 0);
         putsLCD(Toolong_str1);
         LCD_Cursor_New(1, 0);
         putsLCD(Toolong_str2);
+        LCD_Cursor_New(2, 0);
+        putsLCD(Toolong_str3);
         delay200usX(10000);
     }
     if(status == 2)
@@ -322,7 +320,7 @@ int main(void)
         LCD_Cursor_New(0, 0);
         putsLCD(START_str);
         LCD_Cursor_New(0, 0);
-        
+        /* input_status == 1 => numA */
         while(input_status == 0)
         {
             if( (intemp == keypad_task() ) && intemp != -1 )    
@@ -333,14 +331,14 @@ int main(void)
             
             intemp = keypad_task();
             
-            if(firstA && intemp<10 && intemp != -1 )
+            if(firstA && intemp<10 && intemp != -1 )    //press a number for first time
             {
                 LCD_Cursor_New(0, 0);
                 putsLCD(Clear_str);
                 LCD_Cursor_New(0, position=19);
                 firstA = 0;
             }
-            else if(firstA && intemp>10)
+            else if(firstA && intemp>11)    //press not a number or '+','-' for first time
             {
                 LCD_Cursor_New(0, 0);
                 putsLCD(Clear_str);
@@ -352,34 +350,82 @@ int main(void)
                 LCD_Cursor_New(0, 0);
                 putsLCD(START_str);
             }
-            if(intemp<10 && intemp>=0)
+            
+            if(intemp<10 && intemp != -1 )  // press a number
             {
                 if(lengthA==0)
                 {
                     numA = intemp;
                     lengthA++;
                 }
-                else
+                else if(numA < 214748364)
                 {
-                    //for(i=0;i<lengthA;i++)
-                    //{
-                        numA *= 10;
-                    //}
+                    numA *= 10;
                     numA += intemp;
                     lengthA++;
                 }
+                else if(numA > 214748364)
+                {
+                    error(1);
+                    numA = 0;
+                    lengthA = 0;
+                    LCD_clear();
+                    LCD_Cursor_New(0, 0);
+                    putsLCD(START_str);
+                    LCD_Cursor_New(0, 0);
+                    firstA = -1;
+                    continue;
+                }
+                else if(numA = 214748364)
+                {
+                    if(intemp <=7)
+                    {
+                        numA *= 10;
+                        numA += intemp;
+                        lengthA++;
+                    }
+                    else
+                    {
+                        error(1);
+                        numA = 0;
+                        lengthA = 0;
+                        LCD_clear();
+                        LCD_Cursor_New(0, 0);
+                        putsLCD(START_str);
+                        LCD_Cursor_New(0, 0);
+                        firstA = -1;
+                        continue;
+                    }
+                }
                 num_print(numA,19,1);
             }
-            
-            
-            //LCD_Cursor_New(0, position);
-
+            else if(intemp == 10)   //press '+'
+            {
                 
+            }
+            else if(intemp == 11)   //press '-'
+            {
                 
-          
+            }
+            else if(intemp == 14)   //press '*'
+            {
+                
+            }
+            else if(intemp == 15)   //press '/'
+            {
+                
+            }
+            if(intemp == 12)    //press 'clear'
+            {
+                
+            }
+            if(intemp == 13)    //press '='
+            {
+                
+            }
         }
-        
-
+            
+        //num_print(0-numA,19,1);
     }
 }
 
