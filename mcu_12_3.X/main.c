@@ -54,7 +54,6 @@ void delay200usX(unsigned long delay_count)
 void initPLL(void)
 {
     int i,j;
-
     CLKDIVbits.ROI = 0;
     CLKDIVbits.DOZEN = 0;
     CLKDIVbits.DOZE = 0;
@@ -68,7 +67,6 @@ void initPLL(void)
     //wait for Fosc stablize
     for (i=1000; i>0; i--)
         for (j=1000; j>0; j--);
-
 }
 
 
@@ -214,9 +212,7 @@ void num_print(long value,int pos,int line)
     {
         LCD_Cursor_New(line, pos);
         putcLCD('-');
-        LATDbits.LATD11 = 0;
     }
-    
 }
 
 void error(int status)
@@ -259,7 +255,6 @@ void caculate_print(char value)
         case 3:
             putcLCD('/');
             break;
-        
     }
 }
 
@@ -484,6 +479,10 @@ Direct:      if( (intemp == keypad_task() ) && intemp != -1 )
             }
             else if(intemp == 13)    //press '='
             {
+                numC = numA;
+                num_print(numA,19,3);
+                LCD_Cursor_New(3, 0);
+                putcLCD('=');
                 input_status = 2;
             }
         }
