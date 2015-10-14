@@ -9,11 +9,17 @@ Command:
   dist/default/production/mcu_12_3.X.production.elf \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/.. \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib \
+  -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/PIC24E \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/PIC24E/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/PIC24F \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/PIC24F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/PIC24H \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/PIC24H/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/dsPIC30F \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/dsPIC30F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/dsPIC33E \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/dsPIC33E/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/dsPIC33F \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/dsPIC33F/gld \
   build/default/production/keypad.o \
   build/default/production/LCD.o \
@@ -42,8 +48,6 @@ Command:
   --library=lega-c-elf \
   -end-group \
 
-
-Optional library libp33FJ256MC710.a not found
 Archive member included because of file (symbol)
 
 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
@@ -68,10 +72,10 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x100           0x180  (384)
 .const                       0x300                0xf6           0x171  (369)
-.text                        0x3f6              0x126c          0x1ba2  (7074)
-.dinit                      0x1662                0x1a            0x27  (39)
+.text                        0x3f6              0x14ba          0x1f17  (7959)
+.dinit                      0x18b0                0x14            0x1e  (30)
 
-                     Total program memory used (bytes):         0x1eba  (7866) 3%
+                     Total program memory used (bytes):         0x2226  (8742) 3%
 
 
 Data Memory  [Origin = 0x800, Length = 0x7800]
@@ -79,9 +83,8 @@ Data Memory  [Origin = 0x800, Length = 0x7800]
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
 .nbss                        0x800                   0            0x26  (38)
-.bss                         0x826                   0            0x3c  (60)
 
-                        Total data memory used (bytes):           0x62  (98) <1%
+                        Total data memory used (bytes):           0x26  (38) <1%
 
 
 Dynamic Memory Usage
@@ -89,9 +92,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x862                              0x779e  (30622)
+stack                        0x826                              0x77da  (30682)
 
-                        Maximum dynamic memory (bytes):         0x779e  (30622)
+                        Maximum dynamic memory (bytes):         0x77da  (30682)
 
 
 External Symbols in Data Memory (by address):
@@ -110,18 +113,12 @@ External Symbols in Data Memory (by address):
                     0x0820                  _LCD_DATA
                     0x0822                  _LCD_StatusByte
                     0x0824                  _Return_Data
-                    0x0826                  _charA
-                    0x083a                  _charC
-                    0x084e                  _charD
 
 External Symbols in Data Memory (by name):
 
                     0x0820                  _LCD_DATA
                     0x0822                  _LCD_StatusByte
                     0x0824                  _Return_Data
-                    0x0826                  _charA
-                    0x083a                  _charC
-                    0x084e                  _charD
                     0x0813                  _intemp
                     0x0810                  _lengthA
                     0x0811                  _lengthB
@@ -138,8 +135,8 @@ External Symbols in Program Memory (by address):
 
                   0x000200                  __resetPRI
                   0x00022c                  __psv_init
-                  0x00023c                  __data_init_standard
                   0x00023c                  __data_init
+                  0x00023c                  __data_init_standard
                   0x00029a                  __DefaultInterrupt
                   0x00029e                  ___divsi3
                   0x0002bc                  ___modsi3
@@ -150,55 +147,53 @@ External Symbols in Program Memory (by address):
                   0x000440                  _initPLL
                   0x000494                  _PORTS_Test_Initial
                   0x0004e0                  _num2char
-                  0x00055a                  _num_check
-                  0x000596                  _num_m2v
-                  0x0005f8                  _num_print
-                  0x000732                  _error
-                  0x00077c                  _caculate_print
-                  0x0007c6                  _function
-                  0x000920                  _main
-                  0x000fd8                  _LCDIsBusy
-                  0x00100a                  _InitializeLCM
-                  0x001054                  _LCD_Cursor_Classic
-                  0x0010a0                  _LCD_Cursor_New
-                  0x0010ec                  _putcLCD
-                  0x0010f8                  _putsLCD
-                  0x001112                  _putrsLCD
-                  0x001134                  _LCD_Delay200usX
-                  0x00114e                  _LCD_Delay200us
-                  0x001164                  _datareadLCD
-                  0x0011ac                  _cmdreadLCD
-                  0x0011ec                  _LCD_WriteData
-                  0x0012d8                  _LCD_Command_4b
-                  0x001354                  _LCD_Command
-                  0x001440                  _LCD_E_Delay
-                  0x001456                  _LCD_start
-                  0x0014a6                  _LCD_clear
-                  0x0014d4                  _keypad_init
-                  0x0014f0                  _keypad_Scan
-                  0x0015d2                  _keypad_GetButton
-                  0x001608                  _keypad_task
-                  0x00162c                  _T1_Initial
-                  0x001644                  __T1Interrupt
+                  0x00055a                  _num_print
+                  0x0006a0                  _error
+                  0x0006ea                  _caculate_print
+                  0x000734                  _function
+                  0x00088e                  _main
+                  0x001226                  _LCDIsBusy
+                  0x001258                  _InitializeLCM
+                  0x0012a2                  _LCD_Cursor_Classic
+                  0x0012ee                  _LCD_Cursor_New
+                  0x00133a                  _putcLCD
+                  0x001346                  _putsLCD
+                  0x001360                  _putrsLCD
+                  0x001382                  _LCD_Delay200usX
+                  0x00139c                  _LCD_Delay200us
+                  0x0013b2                  _datareadLCD
+                  0x0013fa                  _cmdreadLCD
+                  0x00143a                  _LCD_WriteData
+                  0x001526                  _LCD_Command_4b
+                  0x0015a2                  _LCD_Command
+                  0x00168e                  _LCD_E_Delay
+                  0x0016a4                  _LCD_start
+                  0x0016f4                  _LCD_clear
+                  0x001722                  _keypad_init
+                  0x00173e                  _keypad_Scan
+                  0x001820                  _keypad_GetButton
+                  0x001856                  _keypad_task
+                  0x00187a                  _T1_Initial
+                  0x001892                  __T1Interrupt
 
 External Symbols in Program Memory (by name):
 
-                  0x00100a                  _InitializeLCM
-                  0x000fd8                  _LCDIsBusy
-                  0x001354                  _LCD_Command
-                  0x0012d8                  _LCD_Command_4b
-                  0x001054                  _LCD_Cursor_Classic
-                  0x0010a0                  _LCD_Cursor_New
-                  0x00114e                  _LCD_Delay200us
-                  0x001134                  _LCD_Delay200usX
-                  0x001440                  _LCD_E_Delay
-                  0x0011ec                  _LCD_WriteData
-                  0x0014a6                  _LCD_clear
-                  0x001456                  _LCD_start
+                  0x001258                  _InitializeLCM
+                  0x001226                  _LCDIsBusy
+                  0x0015a2                  _LCD_Command
+                  0x001526                  _LCD_Command_4b
+                  0x0012a2                  _LCD_Cursor_Classic
+                  0x0012ee                  _LCD_Cursor_New
+                  0x00139c                  _LCD_Delay200us
+                  0x001382                  _LCD_Delay200usX
+                  0x00168e                  _LCD_E_Delay
+                  0x00143a                  _LCD_WriteData
+                  0x0016f4                  _LCD_clear
+                  0x0016a4                  _LCD_start
                   0x000494                  _PORTS_Test_Initial
-                  0x00162c                  _T1_Initial
+                  0x00187a                  _T1_Initial
                   0x00029a                  __DefaultInterrupt
-                  0x001644                  __T1Interrupt
+                  0x001892                  __T1Interrupt
                   0x00029e                  ___divsi3
                   0x0002bc                  ___modsi3
                   0x0002da                  ___udivsi3
@@ -207,26 +202,24 @@ External Symbols in Program Memory (by name):
                   0x00023c                  __data_init_standard
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
-                  0x00077c                  _caculate_print
-                  0x0011ac                  _cmdreadLCD
-                  0x001164                  _datareadLCD
+                  0x0006ea                  _caculate_print
+                  0x0013fa                  _cmdreadLCD
+                  0x0013b2                  _datareadLCD
                   0x0003f6                  _delay
                   0x000418                  _delay200usX
-                  0x000732                  _error
-                  0x0007c6                  _function
+                  0x0006a0                  _error
+                  0x000734                  _function
                   0x000440                  _initPLL
-                  0x0015d2                  _keypad_GetButton
-                  0x0014f0                  _keypad_Scan
-                  0x0014d4                  _keypad_init
-                  0x001608                  _keypad_task
-                  0x000920                  _main
+                  0x001820                  _keypad_GetButton
+                  0x00173e                  _keypad_Scan
+                  0x001722                  _keypad_init
+                  0x001856                  _keypad_task
+                  0x00088e                  _main
                   0x0004e0                  _num2char
-                  0x00055a                  _num_check
-                  0x000596                  _num_m2v
-                  0x0005f8                  _num_print
-                  0x0010ec                  _putcLCD
-                  0x001112                  _putrsLCD
-                  0x0010f8                  _putsLCD
+                  0x00055a                  _num_print
+                  0x00133a                  _putcLCD
+                  0x001360                  _putrsLCD
+                  0x001346                  _putsLCD
 
 Memory Configuration
 
@@ -258,7 +251,7 @@ LOAD build/default/production/LCD.o
 LOAD build/default/production/main.o
 LOAD build/default/production/timer.o
                     0x0001                  __MPLAB_BUILD = 0x1
-LOAD p33FJ256MC710
+LOAD c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/dsPIC33F\libp33FJ256MC710-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libfx-elf.a
                     0xf80000                  __FBS = 0xf80000
                     0xf80002                  __FSS = 0xf80002
@@ -363,41 +356,41 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x246a
+.debug_info       0x000000       0x2386
  *(.debug_info)
  .debug_info      0x000000        0x4fb build/default/production/keypad.o
  .debug_info      0x0004fb        0x92d build/default/production/LCD.o
- .debug_info      0x000e28       0x104e build/default/production/main.o
- .debug_info      0x001e76        0x5f4 build/default/production/timer.o
+ .debug_info      0x000e28        0xf6a build/default/production/main.o
+ .debug_info      0x001d92        0x5f4 build/default/production/timer.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x603
+.debug_abbrev     0x000000        0x5e2
  *(.debug_abbrev)
  .debug_abbrev    0x000000         0xc7 build/default/production/keypad.o
  .debug_abbrev    0x0000c7        0x1e0 build/default/production/LCD.o
- .debug_abbrev    0x0002a7        0x257 build/default/production/main.o
- .debug_abbrev    0x0004fe        0x105 build/default/production/timer.o
+ .debug_abbrev    0x0002a7        0x236 build/default/production/main.o
+ .debug_abbrev    0x0004dd        0x105 build/default/production/timer.o
 
-.debug_line       0x000000       0x1cc9
+.debug_line       0x000000       0x20ae
  *(.debug_line)
  .debug_line      0x000000        0x300 build/default/production/keypad.o
  .debug_line      0x000300        0x7ee build/default/production/LCD.o
- .debug_line      0x000aee       0x10d6 build/default/production/main.o
- .debug_line      0x001bc4        0x105 build/default/production/timer.o
+ .debug_line      0x000aee       0x14bb build/default/production/main.o
+ .debug_line      0x001fa9        0x105 build/default/production/timer.o
 
-.debug_frame      0x000000        0x280
+.debug_frame      0x000000        0x260
  *(.debug_frame)
  .debug_frame     0x000000         0x54 build/default/production/keypad.o
  .debug_frame     0x000054        0x124 build/default/production/LCD.o
- .debug_frame     0x000178         0xd4 build/default/production/main.o
- .debug_frame     0x00024c         0x34 build/default/production/timer.o
+ .debug_frame     0x000178         0xb4 build/default/production/main.o
+ .debug_frame     0x00022c         0x34 build/default/production/timer.o
 
-.debug_str        0x000000         0xd8
+.debug_str        0x000000         0xd2
  *(.debug_str)
  .debug_str       0x000000         0x13 build/default/production/keypad.o
  .debug_str       0x000013         0x65 build/default/production/LCD.o
- .debug_str       0x000078         0x44 build/default/production/main.o
- .debug_str       0x0000bc         0x1c build/default/production/timer.o
+ .debug_str       0x000078         0x3e build/default/production/main.o
+ .debug_str       0x0000b6         0x1c build/default/production/timer.o
 
 .debug_loc
  *(.debug_loc)
@@ -406,16 +399,16 @@ __FUID3
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x36e
+                  0x000000        0x336
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x57 build/default/production/keypad.o
  .debug_pubnames
                   0x000057        0x158 build/default/production/LCD.o
  .debug_pubnames
-                  0x0001af        0x166 build/default/production/main.o
+                  0x0001af        0x12e build/default/production/main.o
  .debug_pubnames
-                  0x000315         0x59 build/default/production/timer.o
+                  0x0002dd         0x59 build/default/production/timer.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -443,7 +436,7 @@ __FUID3
                   0x000014          0x4 LONG 0x29a DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000016          0x4 LONG 0x29a DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000018          0x4 LONG 0x29a DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00001a          0x4 LONG 0x1644 DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00001a          0x4 LONG 0x1892 DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00001c          0x4 LONG 0x29a DEFINED (__DMA0Interrupt)?ABSOLUTE (__DMA0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00001e          0x4 LONG 0x29a DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x29a DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -571,7 +564,7 @@ __FUID3
                   0x000114          0x4 LONG 0x29a DEFINED (__AltINT0Interrupt)?ABSOLUTE (__AltINT0Interrupt):DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000116          0x4 LONG 0x29a DEFINED (__AltIC1Interrupt)?ABSOLUTE (__AltIC1Interrupt):DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000118          0x4 LONG 0x29a DEFINED (__AltOC1Interrupt)?ABSOLUTE (__AltOC1Interrupt):DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00011a          0x4 LONG 0x1644 DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00011a          0x4 LONG 0x1892 DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00011c          0x4 LONG 0x29a DEFINED (__AltDMA0Interrupt)?ABSOLUTE (__AltDMA0Interrupt):DEFINED (__DMA0Interrupt)?ABSOLUTE (__DMA0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00011e          0x4 LONG 0x29a DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000120          0x4 LONG 0x29a DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -2044,56 +2037,48 @@ __c30_signature
                     0x0822                  _LCD_StatusByte
                     0x0824                  _Return_Data
 
-.bss                0x0826         0x3c
- .bss               0x0826         0x3c build/default/production/main.o
-                    0x0826                  _charA
-                    0x083a                  _charC
-                    0x084e                  _charD
-
 .const              0x8300         0xf6 load address 0x000300  
  .const             0x8300         0xa2 build/default/production/main.o
  .const             0x83a2         0x54 build/default/production/LCD.o
 
-.text             0x0003f6       0x126c
- .text            0x0003f6        0xbe2 build/default/production/main.o
+.text             0x0003f6       0x14ba
+ .text            0x0003f6        0xe30 build/default/production/main.o
                   0x0003f6                  _delay
                   0x000418                  _delay200usX
                   0x000440                  _initPLL
                   0x000494                  _PORTS_Test_Initial
                   0x0004e0                  _num2char
-                  0x00055a                  _num_check
-                  0x000596                  _num_m2v
-                  0x0005f8                  _num_print
-                  0x000732                  _error
-                  0x00077c                  _caculate_print
-                  0x0007c6                  _function
-                  0x000920                  _main
- .text            0x000fd8        0x4fc build/default/production/LCD.o
-                  0x000fd8                  _LCDIsBusy
-                  0x00100a                  _InitializeLCM
-                  0x001054                  _LCD_Cursor_Classic
-                  0x0010a0                  _LCD_Cursor_New
-                  0x0010ec                  _putcLCD
-                  0x0010f8                  _putsLCD
-                  0x001112                  _putrsLCD
-                  0x001134                  _LCD_Delay200usX
-                  0x00114e                  _LCD_Delay200us
-                  0x001164                  _datareadLCD
-                  0x0011ac                  _cmdreadLCD
-                  0x0011ec                  _LCD_WriteData
-                  0x0012d8                  _LCD_Command_4b
-                  0x001354                  _LCD_Command
-                  0x001440                  _LCD_E_Delay
-                  0x001456                  _LCD_start
-                  0x0014a6                  _LCD_clear
- .text            0x0014d4        0x158 build/default/production/keypad.o
-                  0x0014d4                  _keypad_init
-                  0x0014f0                  _keypad_Scan
-                  0x0015d2                  _keypad_GetButton
-                  0x001608                  _keypad_task
- .text            0x00162c         0x36 build/default/production/timer.o
-                  0x00162c                  _T1_Initial
-                  0x001644                  __T1Interrupt
+                  0x00055a                  _num_print
+                  0x0006a0                  _error
+                  0x0006ea                  _caculate_print
+                  0x000734                  _function
+                  0x00088e                  _main
+ .text            0x001226        0x4fc build/default/production/LCD.o
+                  0x001226                  _LCDIsBusy
+                  0x001258                  _InitializeLCM
+                  0x0012a2                  _LCD_Cursor_Classic
+                  0x0012ee                  _LCD_Cursor_New
+                  0x00133a                  _putcLCD
+                  0x001346                  _putsLCD
+                  0x001360                  _putrsLCD
+                  0x001382                  _LCD_Delay200usX
+                  0x00139c                  _LCD_Delay200us
+                  0x0013b2                  _datareadLCD
+                  0x0013fa                  _cmdreadLCD
+                  0x00143a                  _LCD_WriteData
+                  0x001526                  _LCD_Command_4b
+                  0x0015a2                  _LCD_Command
+                  0x00168e                  _LCD_E_Delay
+                  0x0016a4                  _LCD_start
+                  0x0016f4                  _LCD_clear
+ .text            0x001722        0x158 build/default/production/keypad.o
+                  0x001722                  _keypad_init
+                  0x00173e                  _keypad_Scan
+                  0x001820                  _keypad_GetButton
+                  0x001856                  _keypad_task
+ .text            0x00187a         0x36 build/default/production/timer.o
+                  0x00187a                  _T1_Initial
+                  0x001892                  __T1Interrupt
 
-.dinit            0x001662         0x1a
- .dinit           0x001662         0x1a data_init
+.dinit            0x0018b0         0x14
+ .dinit           0x0018b0         0x14 data_init

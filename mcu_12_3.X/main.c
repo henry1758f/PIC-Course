@@ -33,9 +33,7 @@ _FICD(0xC2);
 #define error_str    "Error!              " //21
 
 //Global variables
-long             numA,numB,numC,numD;
-int charA[10],charC[10],charD[10];
-//unsigned char A[6],B[6],C[6];
+long numA,numB,numC,numD;
 char lengthA = 0 ,lengthB = 0 ,lengthC = 0,intemp;
 
 void delay(unsigned long delay_count)
@@ -146,61 +144,14 @@ unsigned char num2char(int key)     //convert a number to char
         }
 }
 
-int num_check(int value[6])
-{
-    /*return 2 :too long
-      return 0 :Okey*/
-    if(value[0]>=7) /*length check*/
-    {
-        if(value[1]>=6)
-        {
-            if(value[2]>=7)
-            {
-                if(value[3]>=2)
-                {
-                    if(value[4]>3)
-                    {
-                        return 2;
-                    }
-                }
-            }       
-        }
-    }
-    return 0;
-}
-
-int num_m2v(int value[6])
-{
-    int result = 0;
-    result = value[0]        + 
-             value[1] * 10   +
-             value[2] * 100  +
-             value[3] * 1000 +
-             value[4] * 10000;
-    if(value[0]==1)
-    {
-        LATDbits.LATD11 = 0;                        /* turn the LCM back light */
-    }
-    if(value[5] != 0)
-    {
-        result = 0-result;
-        return result;
-    }
-    else
-    {
-        return result;
-    }
-}
-
-
-
-
 void num_print(long value,int pos,int line)
 {
-    //char temp1,temp2,temp3,temp4,temp5,temp6,temp;
     /* In XC16 compiler ,long type has 32 bits, value from -2,147,483,648 ~ +2,147,483,647*/
     long temp;
     unsigned char numcount = 0,forcount;
+    LCD_Cursor_New(line,0);
+    putsLCD(Clear_str);
+
     if(value < 0)
     {
         temp = value*(-1);
@@ -366,18 +317,18 @@ char function(char how)
             numC=numA/numB;
             numD=numA%numB;
             return 1;
-            
     }
 }
 
 int main(void)
 {
-    unsigned char   temp[32];
+    //unsigned char   temp[32];
     unsigned char   input_status = 0;   //0:numA   1:numB   2:result 3:error
-    unsigned char   firstA = 1,firstB = 1,firstC = 1,firstD = 1,
+    unsigned char   firstA = 1,firstB = 1,      //
                     position = 0,
                     caculate = 0,   //0=+ , 1=- , 2=* , 3=/
-                    i,success;
+                    i,
+                    success;
     RCONbits.SWDTEN = 0;			//disable Watch dog timer
     initPLL();
 
@@ -405,7 +356,7 @@ int main(void)
         /* input_status == 1 => numA */
         while(input_status == 0)
         {
-            if( (intemp == keypad_task() ) && intemp != -1 )    
+Direct:      if( (intemp == keypad_task() ) && intemp != -1 )    
             {
                 wait_key_over;
             }
@@ -484,7 +435,6 @@ int main(void)
             else if(intemp == 10)   //press '+'
             {
                 input_status = 1;
-                //num_print(numA,19,0);       //not necessary?
                 LCD_Cursor_New(1, 0);
                 putcLCD('+');
                 caculate = 0;
@@ -527,8 +477,6 @@ int main(void)
                 lengthC = 0;
                 firstA = 1;
                 firstB = 1;
-                firstC = 1;
-                firstD = 1;
                 position = 0;
                 input_status = 0;
                 LCD_clear();
@@ -546,12 +494,12 @@ int main(void)
   /********************************************************************************/      
         while(input_status == 1)    //numA has value to caculate
         {
-            if( (intemp == keypad_task() ) && intemp != -1 )    
+DirectB:     if( (intemp == keypad_task() ) && intemp != -1 )    
             {
                 wait_key_over;
             }
             intemp = keypad_task();
-            
+
             if(intemp>=10 && firstB)    //press not a number for first time
             {
                 if(intemp == 10)    //+
@@ -585,8 +533,6 @@ int main(void)
                     lengthC = 0;
                     firstA = 1;
                     firstB = 1;
-                    firstC = 1;
-                    firstD = 1;
                     position = 0;
                     input_status = 0;
                     LCD_clear();
@@ -594,72 +540,7 @@ int main(void)
                 }
                 else if (intemp == 13)      //=
                 {
-                    
-                }
-                else if (intemp == 14)      //*
-                {
-                    if(caculate != 2)
-                    {
-                        num_print(numA,19,0);
-                        LCD_Cursor_New(1, 0);
-                        putcLCD('*');
-                    }
-                    caculate = 2;
-                }
-                else if (intemp == 15)      ///
-                {
-                    if(caculate != 3)
-                    {
-                        num_print(numA,19,0);
-                        LCD_Cursor_New(1, 0);
-                        putcLCD('/');
-                    }
-                    caculate = 3;
-                }
-                continue;
-            }
-            else if(intemp >=10 && !firstB)     //numB has value
-            {
-                if(intemp == 10)    //+
-                {
-                    if(caculate != 0)
-                    {
-                        num_print(numA,19,0);
-                        LCD_Cursor_New(1, 0);
-                        putcLCD('+');
-                    }
-                    caculate = 0;
-                }
-                else if(intemp == 11)       //-
-                {
-                    if(caculate != 1)
-                    {
-                        num_print(numA,19,0);
-                        LCD_Cursor_New(1, 0);
-                        putcLCD('-');
-                    }
-                    caculate = 1;
-                }
-                else if(intemp == 12)       //clear
-                {
-                    numA = 0;
                     numB = 0;
-                    numC = 0;
-                    numD = 0;
-                    lengthA = 0;
-                    lengthB = 0;
-                    lengthC = 0;
-                    firstA = 1;
-                    firstB = 1;
-                    firstC = 1;
-                    firstD = 1;
-                    position = 0;
-                    input_status = 0;
-                    LCD_clear();
-                    break;
-                }
-                else if (intemp == 13)      //=
-                {
                     success = function(caculate);
                     if(success)
                     {
@@ -675,7 +556,8 @@ int main(void)
                             putcLCD('=');
                             num_print(numC,19,3);
                         }
-                        
+                        input_status = 2;
+                        break;
                     }
                     else
                     {
@@ -690,8 +572,6 @@ int main(void)
                         lengthC = 0;
                         firstA = 1;
                         firstB = 1;
-                        firstC = 1;
-                        firstD = 1;
                         position = 0;
                         input_status = 0;
                         LCD_clear();
@@ -720,7 +600,257 @@ int main(void)
                 }
                 continue;
             }
-            
+            else if(intemp >=10 && !firstB)     //numB has value
+            {
+                if(intemp == 10)    //+
+                {
+                    success = function(caculate);
+                    if(success)
+                    {
+                        numA = numC;
+                        if(numD == 0 && caculate != 3)
+                        {
+                            LCD_Cursor_New(1, 0);
+                            putcLCD('+');
+                            num_print(numA,19,0);
+                            LCD_Cursor_New(2, 0);
+                            putsLCD(Clear_str);
+
+                        }
+                        else
+                        {
+                            LCD_Cursor_New(1, 0);
+                            putcLCD('+');
+                            num_print(numA,19,0);
+                            LCD_Cursor_New(2, 0);
+                            putsLCD(Clear_str);
+                        }
+                        numB = 0;
+                        firstB = 1;
+                        lengthB = 0;
+                        caculate = 0;
+                        continue;
+                    }
+                    else
+                    {
+                        LCD_Cursor_New(3, 0);
+                        error(2);
+                        numA = 0;
+                        numB = 0;
+                        numC = 0;
+                        numD = 0;
+                        lengthA = 0;
+                        lengthB = 0;
+                        lengthC = 0;
+                        firstA = 1;
+                        firstB = 1;
+                        position = 0;
+                        input_status = 0;
+                        LCD_clear();
+                        break;
+                    }
+                }
+                else if(intemp == 11)   //-
+                {
+                    success = function(caculate);
+                    if(success)
+                    {
+                        numA = numC;
+                        if(numD == 0 && caculate != 3)
+                        {
+                            LCD_Cursor_New(1, 0);
+                            putcLCD('-');
+                            num_print(numA,19,0);
+                            LCD_Cursor_New(2, 0);
+                            putsLCD(Clear_str);
+
+                        }
+                        else
+                        {
+                            LCD_Cursor_New(1, 0);
+                            putcLCD('-');
+                            num_print(numA,19,0);
+                            LCD_Cursor_New(2, 0);
+                            putsLCD(Clear_str);
+                        }
+                        numB = 0;
+                        firstB = 1;
+                        lengthB = 0;
+                        caculate = 1;
+                        continue;
+                    }
+                    else
+                    {
+                        LCD_Cursor_New(3, 0);
+                        error(2);
+                        numA = 0;
+                        numB = 0;
+                        numC = 0;
+                        numD = 0;
+                        lengthA = 0;
+                        lengthB = 0;
+                        lengthC = 0;
+                        firstA = 1;
+                        firstB = 1;
+                        position = 0;
+                        input_status = 0;
+                        LCD_clear();
+                        break;
+                    }
+                }
+                else if(intemp == 12)   //clear
+                {
+                    numA = 0;
+                    numB = 0;
+                    numC = 0;
+                    numD = 0;
+                    lengthA = 0;
+                    lengthB = 0;
+                    lengthC = 0;
+                    firstA = 1;
+                    firstB = 1;
+                    position = 0;
+                    input_status = 0;
+                    LCD_clear();
+                    break;
+                }
+                else if(intemp == 13)   //=
+                {
+                    success = function(caculate);
+                    if(success)
+                    {
+                        if(numD == 0 && caculate != 3)
+                        {
+                            LCD_Cursor_New(3, 0);
+                            putcLCD('=');
+                            num_print(numC,19,3);
+                        }
+                        else
+                        {
+                            LCD_Cursor_New(3, 0);
+                            putcLCD('=');
+                            num_print(numC,19,3);
+                        }
+                        input_status = 2;
+                        break;
+                    }
+                    else
+                    {
+                        LCD_Cursor_New(3, 0);
+                        error(2);
+                        numA = 0;
+                        numB = 0;
+                        numC = 0;
+                        numD = 0;
+                        lengthA = 0;
+                        lengthB = 0;
+                        lengthC = 0;
+                        firstA = 1;
+                        firstB = 1;
+                        position = 0;
+                        input_status = 0;
+                        LCD_clear();
+                        break;
+                    }
+                }
+                else if(intemp == 14)   //*
+                {
+                    success = function(caculate);
+                    if(success)
+                    {
+                        numA = numC;
+                        if(numD == 0 && caculate != 3)
+                        {
+                            LCD_Cursor_New(1, 0);
+                            putcLCD('*');
+                            num_print(numA,19,0);
+                            LCD_Cursor_New(2, 0);
+                            putsLCD(Clear_str);
+
+                        }
+                        else
+                        {
+                            LCD_Cursor_New(1, 0);
+                            putcLCD('*');
+                            num_print(numA,19,0);
+                            LCD_Cursor_New(2, 0);
+                            putsLCD(Clear_str);
+                        }
+                        numB = 0;
+                        firstB = 1;
+                        lengthB = 0;
+                        caculate = 2;
+                        continue;
+                    }
+                    else
+                    {
+                        LCD_Cursor_New(3, 0);
+                        error(2);
+                        numA = 0;
+                        numB = 0;
+                        numC = 0;
+                        numD = 0;
+                        lengthA = 0;
+                        lengthB = 0;
+                        lengthC = 0;
+                        firstA = 1;
+                        firstB = 1;
+                        position = 0;
+                        input_status = 0;
+                        LCD_clear();
+                        break;
+                    }
+                }
+                else if(intemp == 15)   ///
+                {
+                    success = function(caculate);
+                    if(success)
+                    {
+                        numA = numC;
+                        if(numD == 0 && caculate != 3)
+                        {
+                            LCD_Cursor_New(1, 0);
+                            putcLCD('/');
+                            num_print(numA,19,0);
+                            LCD_Cursor_New(2, 0);
+                            putsLCD(Clear_str);
+
+                        }
+                        else
+                        {
+                            LCD_Cursor_New(1, 0);
+                            putcLCD('/');
+                            num_print(numA,19,0);
+                            LCD_Cursor_New(2, 0);
+                            putsLCD(Clear_str);
+                        }
+                        numB = 0;
+                        firstB = 1;
+                        lengthB = 0;
+                        caculate = 3;
+                        continue;
+                    }
+                    else
+                    {
+                        LCD_Cursor_New(3, 0);
+                        error(2);
+                        numA = 0;
+                        numB = 0;
+                        numC = 0;
+                        numD = 0;
+                        lengthA = 0;
+                        lengthB = 0;
+                        lengthC = 0;
+                        firstA = 1;
+                        firstB = 1;
+                        position = 0;
+                        input_status = 0;
+                        LCD_clear();
+                        break;
+                    }
+                }
+            }
+
             if(intemp<10 && intemp != -1 )  // press a number
             {
                 firstB = 0;
@@ -750,7 +880,7 @@ int main(void)
                     caculate_print(caculate);
                     LCD_Cursor_New(2, 0);
                     putsLCD(reinput_str);
-                    
+
                     firstB = 1;
                     continue;
                 }
@@ -769,7 +899,7 @@ int main(void)
                         lengthB = 0;
                         LCD_clear();
                         num_print(numA,19,0);
-                        
+
                         caculate_print(caculate);
                         LCD_Cursor_New(2, 0);
                         putsLCD(reinput_str);
@@ -778,28 +908,18 @@ int main(void)
                     }
                 }
             }
-            else if(intemp == 10)   //press '+'
-            {
-                
-                continue;
-                
-            }
-            else if(intemp == 11)   //press '-'
-            {
-                
-                continue;
-            }
-            else if(intemp == 14)   //press '*'
-            {
-                
-                continue;
-            }
-            else if(intemp == 15)   //press '/'
-            {
-                
-                continue;
-            }
-            else if(intemp == 12)    //press 'clear'
+        }
+/********************************************************************************/   
+/********************************************************************************/   
+/**********************************    After   **********************************/         
+/********************************************************************************/         
+/********************************************************************************/
+        while(input_status == 2)
+        {
+            wait_key_over
+            intemp = keypad_task();
+
+            if((intemp <=9 && intemp >=0) || intemp == 12)
             {
                 numA = 0;
                 numB = 0;
@@ -810,23 +930,53 @@ int main(void)
                 lengthC = 0;
                 firstA = 1;
                 firstB = 1;
-                firstC = 1;
-                firstD = 1;
                 position = 0;
                 input_status = 0;
                 LCD_clear();
                 break;
-            }
-            else if(intemp == 13)    //press '='
-            {
                 
             }
-            
+            else if(intemp != -1 && intemp != 13)
+            {
+                numA = numC;
+                numB = 0;
+                numC = 0;
+                numD = 0;
+                lengthB = 0;
+                lengthC = 0;
+                firstB = 1;
+                input_status =1;
+                LCD_clear();
+                num_print(numA,19,0);
+                switch(intemp)
+                {
+                    case 10:
+                        caculate = 0;
+                        caculate_print(caculate);
+                        break;
+                    case 11:
+                        caculate = 1;
+                        caculate_print(caculate);
+                        break;
+                    case 14:
+                        caculate = 2;
+                        caculate_print(caculate);
+                        break;
+                    case 15:
+                        caculate = 3;
+                        caculate_print(caculate);
+                        break;
+                }
+                
+                goto DirectB;
+            }
             
         }
             
-        //num_print(0-numA,19,1);
+            
     }
+
+        //num_print(0-numA,19,1);
 }
 
 

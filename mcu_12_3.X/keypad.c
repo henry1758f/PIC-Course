@@ -132,7 +132,7 @@ int keypad_GetButton(char target)
     key = keypad_Scan();
     if (key & (1<<target)) //0000 0000 0000 0001 left shift !!!
     {
-        LCD_Delay200usX(250); /* 50ms */
+        LCD_Delay200usX(100); /* 20ms */
         key = keypad_Scan();
         if (key & (1<<target)) {
             return 1;
