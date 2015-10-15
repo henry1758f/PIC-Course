@@ -18,7 +18,6 @@
       <itemPath>keypad.c</itemPath>
       <itemPath>LCD.c</itemPath>
       <itemPath>main.c</itemPath>
-      <itemPath>timer.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

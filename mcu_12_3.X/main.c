@@ -33,7 +33,7 @@ _FICD(0xC2);
 #define error_str    "Error!              " //21
 
 //Global variables
-long numA,numB,numC,numD;
+long numA,numB,numD,numC;
 char lengthA = 0 ,lengthB = 0 ,lengthC = 0,intemp;
 
 void delay(unsigned long delay_count)
@@ -161,7 +161,43 @@ void num_print(long value,int pos,int line)
 
     LCD_Cursor_New(line, pos);
     
-    if(temp > 999999999)
+    if(temp > 9999999999999999999)
+    {
+        numcount = 19;
+    }
+    else if(temp > 99999999999999999)
+    {
+        numcount = 18;
+    }
+    else if(temp > 9999999999999999)
+    {
+        numcount = 17;
+    }
+    else if(temp > 999999999999999)
+    {
+        numcount = 16;
+    }
+    else if(temp > 99999999999999)
+    {
+        numcount = 15;
+    }
+    else if(temp > 9999999999999)
+    {
+        numcount = 14;
+    }
+    else if(temp > 999999999999)
+    {
+        numcount = 13;
+    }
+    else if(temp > 99999999999)
+    {
+        numcount = 12;
+    }
+    else if(temp > 9999999999)
+    {
+        numcount = 11;
+    }
+    else if(temp > 999999999)
     {
         numcount = 10;
     }
@@ -284,11 +320,11 @@ char function(char how)
             }
         case 2:
             numC=numA*numB;
-            if(numA>0 && numB>0 && numC>0)
+            /*if(numA>0 && numB>0 && numC>0)
             {
                 return 1;
             }
-            else if(numA<0 && numB>0 && numC<0)
+            else*/ if(numA<0 && numB>0 && numC<0)
             {
                 return 1;
             }
@@ -299,6 +335,10 @@ char function(char how)
             else if(numA<0 && numB<0 && numC>0)
             {
                 return 1;
+            }
+            else if(numA>numC || numB>numC)
+            {
+                return 0;
             }
             else
             {
