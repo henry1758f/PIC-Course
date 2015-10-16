@@ -9,7 +9,7 @@ Using 16bits DSP(dsPIC33FJ256MC710) development board
 
 ## mcu_12_4  /2015/10/16
 ADC作業
-# ADC1
+### ADC1
   - [ ] 10 bit mode, 4 channels               10位元解析度模式，4個ADC通道
   - [ ] Simultaneous sample                   要同步採樣
   - [ ] manual conversion                     要手動採樣、手動轉換
@@ -17,14 +17,14 @@ ADC作業
   - [ ] Display result on LCD                 顯示ADC結果在LCD上面
   - [ ] Digital filter is necessary           必須要做數位濾波處理
 
-# ADC2
+### ADC2
   - [ ] 12 bits mode, 1 channel               12位元解析模式，1個ADC通道
   - [ ] Manual sample, Automatic conversion   要手動採樣、自動轉換
   - [ ] Read AN12, AN13, AN14, AN15 pins      讀取AN12、AN13、AN14、AN15腳位
   - [ ] Display result on LCD                 顯示ADC結果在LCD上面
   - [ ] Digital filter is necessary           必須要做數位濾波處理
 
-# 自行添加
+### 自行添加
   - [ ] Nope!
 
 
