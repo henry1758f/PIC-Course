@@ -22,6 +22,7 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/dsPIC33F \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/dsPIC33F/gld \
   build/default/production/newmainXC16.o \
+  build/default/production/config.o \
   --defsym=__MPLAB_BUILD=1 \
   -Tp33FJ256MC710.gld.00 \
   --stack=16 \
@@ -60,10 +61,10 @@ Program Memory  [Origin = 0x200, Length = 0x2aa00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200                0x9e            0xed  (237)
-.text                        0x29e                 0x8             0xc  (12)
-.dinit                       0x2a6                 0x2             0x3  (3)
+.text                        0x29e                0x8c            0xd2  (210)
+.dinit                       0x32a                 0x2             0x3  (3)
 
-                     Total program memory used (bytes):           0xfc  (252) <1%
+                     Total program memory used (bytes):          0x1c2  (450) <1%
 
 
 Data Memory  [Origin = 0x800, Length = 0x7800]
@@ -88,10 +89,12 @@ External Symbols in Program Memory (by address):
 
                   0x000200                  __resetPRI
                   0x00022c                  __psv_init
-                  0x00023c                  __data_init_standard
                   0x00023c                  __data_init
+                  0x00023c                  __data_init_standard
                   0x00029a                  __DefaultInterrupt
-                  0x00029e                  _main
+                  0x00029e                  _initPLL
+                  0x0002f2                  _initIO
+                  0x000322                  _main
 
 External Symbols in Program Memory (by name):
 
@@ -100,7 +103,9 @@ External Symbols in Program Memory (by name):
                   0x00023c                  __data_init_standard
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
-                  0x00029e                  _main
+                  0x0002f2                  _initIO
+                  0x00029e                  _initPLL
+                  0x000322                  _main
 
 Memory Configuration
 
@@ -128,6 +133,7 @@ FUID3            0xf80016           0x000002
 Linker script and memory map
 
 LOAD build/default/production/newmainXC16.o
+LOAD build/default/production/config.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/dsPIC33F\libp33FJ256MC710-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libfx-elf.a
@@ -220,22 +226,30 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000         0xb0
+.debug_info       0x000000        0x739
  *(.debug_info)
- .debug_info      0x000000         0xb0 build/default/production/newmainXC16.o
+ .debug_info      0x000000         0xde build/default/production/newmainXC16.o
+ .debug_info      0x0000de        0x65b build/default/production/config.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000         0x36
+.debug_abbrev     0x000000        0x199
  *(.debug_abbrev)
- .debug_abbrev    0x000000         0x36 build/default/production/newmainXC16.o
+ .debug_abbrev    0x000000         0x61 build/default/production/newmainXC16.o
+ .debug_abbrev    0x000061        0x138 build/default/production/config.o
 
-.debug_line       0x000000         0x57
+.debug_line       0x000000        0x1e3
  *(.debug_line)
- .debug_line      0x000000         0x57 build/default/production/newmainXC16.o
+ .debug_line      0x000000         0x5f build/default/production/newmainXC16.o
+ .debug_line      0x00005f        0x184 build/default/production/config.o
 
-.debug_frame      0x000000         0x24
+.debug_frame      0x000000         0x58
  *(.debug_frame)
  .debug_frame     0x000000         0x24 build/default/production/newmainXC16.o
+ .debug_frame     0x000024         0x34 build/default/production/config.o
+
+.debug_str        0x000000          0xb
+ *(.debug_str)
+ .debug_str       0x000000          0xb build/default/production/config.o
 
 .debug_loc
  *(.debug_loc)
@@ -244,18 +258,22 @@ __FUID3
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000         0x1b
+                  0x000000         0x44
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x1b build/default/production/newmainXC16.o
+ .debug_pubnames
+                  0x00001b         0x29 build/default/production/config.o
 
 .debug_ranges
  *(.debug_ranges)
 
-.debug_aranges    0x000000         0x18
+.debug_aranges    0x000000         0x30
  *(.debug_aranges)
  .debug_aranges
                   0x000000         0x18 build/default/production/newmainXC16.o
+ .debug_aranges
+                  0x000018         0x18 build/default/production/config.o
 
 .ivt              0x000004         0xfc
                   0x000004          0x4 LONG 0x29a DEFINED (__ReservedTrap0)?ABSOLUTE (__ReservedTrap0):ABSOLUTE (__DefaultInterrupt)
@@ -1818,22 +1836,56 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000018         0x12
+                  0x000030         0x5e
  .debug_pubtypes
-                  0x000018         0x12 build/default/production/newmainXC16.o
+                  0x000030         0x12 build/default/production/newmainXC16.o
+ .debug_pubtypes
+                  0x000042         0x4c build/default/production/config.o
 
 __c30_signature
-                  0x00002a         0x12
+                  0x00008e         0x18
  __c30_signature
-                  0x00002a          0x6 build/default/production/newmainXC16.o
+                  0x00008e          0x6 build/default/production/newmainXC16.o
  __c30_signature
-                  0x000030          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+                  0x000094          0x6 build/default/production/config.o
  __c30_signature
-                  0x000036          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+                  0x00009a          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+ __c30_signature
+                  0x0000a0          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
 
-.text             0x00029e          0x8
- .text            0x00029e          0x8 build/default/production/newmainXC16.o
-                  0x00029e                  _main
+.config_JTAGEN    0xf8000e          0x2
+ .config_JTAGEN
+                  0xf8000e          0x2 build/default/production/config.o
 
-.dinit            0x0002a6          0x2
- .dinit           0x0002a6          0x2 data_init
+.config_PWMPIN    0xf8000c          0x2
+ .config_PWMPIN
+                  0xf8000c          0x2 build/default/production/config.o
+
+.config_FWDTEN    0xf8000a          0x2
+ .config_FWDTEN
+                  0xf8000a          0x2 build/default/production/config.o
+
+.config_FCKSM     0xf80008          0x2
+ .config_FCKSM    0xf80008          0x2 build/default/production/config.o
+
+.config_IESO      0xf80006          0x2
+ .config_IESO     0xf80006          0x2 build/default/production/config.o
+
+.config_GSS       0xf80004          0x2
+ .config_GSS      0xf80004          0x2 build/default/production/config.o
+
+.config_RSS       0xf80002          0x2
+ .config_RSS      0xf80002          0x2 build/default/production/config.o
+
+.config_RBS       0xf80000          0x2
+ .config_RBS      0xf80000          0x2 build/default/production/config.o
+
+.text             0x00029e         0x8c
+ .text            0x00029e         0x84 build/default/production/config.o
+                  0x00029e                  _initPLL
+                  0x0002f2                  _initIO
+ .text            0x000322          0x8 build/default/production/newmainXC16.o
+                  0x000322                  _main
+
+.dinit            0x00032a          0x2
+ .dinit           0x00032a          0x2 data_init
