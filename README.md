@@ -1,4 +1,4 @@
-# PIC-Course
+﻿# PIC-Course
 高應大電機系 微處理機課程作業系列 林世允 講師
 
 NKUAS Department of Electric Engineering ,Microcontroller course Homework Series ,Instructor:S.Y.Lin
@@ -9,6 +9,8 @@ Using 16bits DSP(dsPIC33FJ256MC710) development board
 
 ## mcu_12_4  /2015/10/16
 ADC作業
+目前正在努力達成ADC1的部分!
+#####目前程序似乎有問題，ADC看起來並未被開啟，請幫我檢查暫存器設定，或其他有可能的錯誤。
 ### ADC1
   - [ ] 10 bit mode, 4 channels               10位元解析度模式，4個ADC通道
   - [ ] Simultaneous sample                   要同步採樣

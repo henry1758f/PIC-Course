@@ -2,11 +2,12 @@
  * File:   LCD.c
  * Author: henry
  *
- * Created on 2015年10月18日, 下午 6:49
+ * Created on 2015年10月19日, 下午 9:44
  */
 #include <xc.h>
-//#include  "main.h"
 #include  "LCD.h"
+#include <stdio.h>
+ unsigned char* clear_str = "                    ";
 
 union{
 	struct{
@@ -23,6 +24,7 @@ union{
 		unsigned char byte;
 	};
 }LCD_DATA;
+
 unsigned char	LCD_StatusByte ;
 int	Return_Data ;
 
@@ -339,6 +341,144 @@ void	LCD_E_Delay(void)
 		for ( E_Loop = 0 ; E_Loop < CPU_FCY * 5 ; E_Loop ++ ) ;
 }
 
+unsigned char num2char(unsigned char value)
+{
+    switch(value)
+    {
+        case 0:
+            return '0';
+            break;
+        case 1:
+            return '1';
+            break;
+        case 2:
+            return '2';
+            break;
+        case 3:
+            return '3';
+            break;
+        case 4:
+            return '4';
+            break;
+        case 5:
+            return '5';
+            break;
+        case 6:
+            return '6';
+            break;
+        case 7:
+            return '7';
+            break;
+        case 8:
+            return '8';
+            break;
+        case 9:
+            return '9';
+            break;
+        case 10:
+            return 'A';
+            break;
+        case 11:
+            return 'B';
+            break;
+        case 12:
+            return 'C';
+            break;
+        case 13:
+            return 'D';
+            break;
+        case 14:
+            return 'E';
+            break;
+        case 15:
+            return 'F';
+            break;
+        default:
+            return 'X';
+            break;
+    }
+    return 'X';
+}
 
+void LCD_start()
+{
+    unsigned char str1[21]="   = MCU Course =   ",
+                  str2[21]="       TEAM 12      ",
+                  str3[21]="     2015/10/19     ";
+    LCD_Cursor_New(0, 0);
+    putsLCD((unsigned char*)str1);
+    LCD_Cursor_New(1, 0);
+    putsLCD((unsigned char*)str2);
+    LCD_Cursor_New(2, 0);
+    putsLCD((unsigned char*)clear_str);
+    LCD_Cursor_New(3, 0);
+    putsLCD((unsigned char*)str3);
+    
+}
 
+void LCD_clear()
+{
+    LCD_Cursor_New(0, 0);
+    putsLCD((unsigned char*)clear_str);
+    LCD_Cursor_New(1, 0);
+    putsLCD((unsigned char*)clear_str);
+    LCD_Cursor_New(2, 0);
+    putsLCD((unsigned char*)clear_str);
+    LCD_Cursor_New(3, 0);
+    putsLCD((unsigned char*)clear_str);
+}
 
+void LCD_clearAline(unsigned char posY)
+{
+    switch (posY)
+    {
+        case 0:
+            LCD_Cursor_New(0, 0);
+            putsLCD((unsigned char*)clear_str);
+            break;
+        case 1:
+            LCD_Cursor_New(1, 0);
+            putsLCD((unsigned char*)clear_str);
+            break;
+        case 2:
+            LCD_Cursor_New(2, 0);
+            putsLCD((unsigned char*)clear_str);
+            break;
+        case 3:
+            LCD_Cursor_New(3, 0);
+            putsLCD((unsigned char*)clear_str);
+            break;
+        default:
+            break;
+    }
+}
+
+void LCD_PrintResult(unsigned char posY,unsigned int value)
+{
+    //unsigned char* str1 = "AN",str2 = " value: ",
+    unsigned char* strvalue;
+    switch(posY)
+    {
+        case 0:
+            LCD_Cursor_New(0, 0);
+            break;
+        case 1:
+            LCD_Cursor_New(1, 0);
+            break;
+        case 2:
+            LCD_Cursor_New(2, 0);
+            break;
+        case 3:
+            LCD_Cursor_New(3, 0);
+            break;
+        default:
+            LCD_Cursor_New(0, 0);
+            break;
+    }
+    //putsLCD(*str1);
+    //putcLCD(num2char(posY));
+    //putsLCD(*str2);
+    sprintf(strvalue, "AD%d: %04d", posY,value);
+    putsLCD((unsigned char*)strvalue);
+    
+}
