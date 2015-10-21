@@ -296,6 +296,7 @@ void caculate_print(char value)
 
 char function(char how)
 {
+    long i;
     switch(how)
     {
         case 0:
@@ -320,29 +321,20 @@ char function(char how)
             }
         case 2:
             numC=numA*numB;
-            /*if(numA>0 && numB>0 && numC>0)
+            for(i=32 ;i>=0;i--)
             {
-                return 1;
+                if(numA>>i !=0)
+                {
+                    break;
+                }
             }
-            else*/ if(numA<0 && numB>0 && numC<0)
-            {
-                return 1;
-            }
-            else if(numA>0 && numB<0 && numC<0)
-            {
-                return 1;
-            }
-            else if(numA<0 && numB<0 && numC>0)
-            {
-                return 1;
-            }
-            else if(numA>numC || numB>numC)
+            if((i+numB) > 32)
             {
                 return 0;
             }
             else
             {
-                return 0;
+                return 1;
             }
         case 3:
             if(numB == 0)

@@ -5,6 +5,7 @@
         <group>
             <file>file:/D:/PIC-Course/mcu_12_4.X/config.c</file>
             <file>file:/D:/PIC-Course/mcu_12_4.X/LCD.c</file>
+            <file>file:/D:/PIC-Course/mcu_12_4.X/LCD.h</file>
             <file>file:/D:/PIC-Course/mcu_12_4.X/newmainXC16.c</file>
         </group>
     </open-files>
