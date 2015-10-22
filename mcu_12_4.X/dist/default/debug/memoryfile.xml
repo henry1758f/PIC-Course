@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/default/production/mcu_12_4.X.production.elf">
+  <executable name="dist/default/debug/mcu_12_4.X.debug.elf">
     <memory name="data">
       <units>bytes</units>
       <length>30720</length>
-      <used>148</used>
-      <free>30572</free>
+      <used>228</used>
+      <free>30492</free>
     </memory>
     <memory name="program">
       <units>bytes</units>

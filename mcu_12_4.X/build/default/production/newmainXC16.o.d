@@ -1,3 +1,4 @@
 build/default/production/newmainXC16.o:  \
 newmainXC16.c  \
-LCD.h 
+LCD.h  \
+config.h 

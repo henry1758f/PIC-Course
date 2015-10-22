@@ -6,7 +6,7 @@ Tool Name:
 Command:
   -p33FJ256MC710 \
   -o \
-  dist/default/production/mcu_12_4.X.production.elf \
+  dist/default/production/Lab3-ADC.X.production.elf \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/.. \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/PIC24E \
@@ -21,9 +21,11 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/dsPIC33F \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/newmainXC16.o \
-  build/default/production/config.o \
   build/default/production/LCD.o \
+  build/default/production/keypad.o \
+  build/default/production/main.o \
+  build/default/production/timer.o \
+  build/default/production/adc.o \
   --defsym=__MPLAB_BUILD=1 \
   -Tp33FJ256MC710.gld.00 \
   --stack=16 \
@@ -37,7 +39,7 @@ Command:
   --stackguard=16 \
   --no-force-link \
   --smart-io \
-  -Map=dist/default/production/mcu_12_4.X.production.map \
+  -Map=dist/default/production/Lab3-ADC.X.production.map \
   --report-mem \
   --memorysummary \
   dist/default/production/memoryfile.xml \
@@ -54,7 +56,7 @@ c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.
 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
                               c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o) (__data_init_standard)
 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(sprintf_cdnopuxX.XXeo)
-                              build/default/production/LCD.o (__sprintf_cdnopuxX)
+                              build/default/production/keypad.o (__sprintf_cdnopuxX)
 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
                               c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(sprintf_cdnopuxX.XXeo) (___Printf_cdnopuxX)
 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xputfld_cdnopuxX.XXeo)
@@ -86,23 +88,21 @@ Program Memory  [Origin = 0x200, Length = 0x2aa00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xa8a           0xfcf  (4047)
-.const                       0xc8a                0x60            0x90  (144)
-.text                        0xcea               0x838           0xc54  (3156)
-.dinit                      0x1522                0x4c            0x72  (114)
+.const                       0xc8a                0x30            0x48  (72)
+.text                        0xcba               0x862           0xc93  (3219)
+.dinit                      0x151c                0x4a            0x6f  (111)
 
-                     Total program memory used (bytes):         0x1d25  (7461) 2%
+                     Total program memory used (bytes):         0x1d19  (7449) 2%
 
 
 Data Memory  [Origin = 0x800, Length = 0x7800]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0             0x6  (6)
-.ndata                       0x806                   0             0x2  (2)
-.bss                         0x808                   0            0x50  (80)
-.data                        0x858                   0            0x3c  (60)
+.nbss                        0x800                   0            0x14  (20)
+.data                        0x814                   0            0x3c  (60)
 
-                        Total data memory used (bytes):           0x94  (148) <1%
+                        Total data memory used (bytes):           0x50  (80) <1%
 
 
 Dynamic Memory Usage
@@ -110,33 +110,35 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x894                              0x776c  (30572)
+stack                        0x850                              0x77b0  (30640)
 
-                        Maximum dynamic memory (bytes):         0x776c  (30572)
+                        Maximum dynamic memory (bytes):         0x77b0  (30640)
 
 
 External Symbols in Data Memory (by address):
 
-                    0x0800                  _LCD_DATA
-                    0x0802                  _LCD_StatusByte
-                    0x0804                  _Return_Data
-                    0x0806                  _clear_str
-                    0x0808                  _ADresult
+                    0x0800                  _t1_counter
+                    0x0802                  _time_sec
+                    0x0804                  _timer1
+                    0x080c                  _LCD_DATA
+                    0x080e                  _LCD_StatusByte
+                    0x0810                  _Return_Data
 
 External Symbols in Data Memory (by name):
 
-                    0x0808                  _ADresult
-                    0x0800                  _LCD_DATA
-                    0x0802                  _LCD_StatusByte
-                    0x0804                  _Return_Data
-                    0x0806                  _clear_str
+                    0x080c                  _LCD_DATA
+                    0x080e                  _LCD_StatusByte
+                    0x0810                  _Return_Data
+                    0x0800                  _t1_counter
+                    0x0802                  _time_sec
+                    0x0804                  _timer1
 
 External Symbols in Program Memory (by address):
 
                   0x000200                  __resetPRI
                   0x00022c                  __psv_init
-                  0x00023c                  __data_init
                   0x00023c                  __data_init_standard
+                  0x00023c                  __data_init
                   0x00029e                  __DefaultInterrupt
                   0x0002a2                  sprintf_cdnopuxX.XXeo:_prout
                   0x0002b0                  __sprintf_cdnopuxX
@@ -155,54 +157,53 @@ External Symbols in Program Memory (by address):
                   0x000bc6                  ___umoddi3
                   0x000bce                  ___divdi3
                   0x000c2e                  ___moddi3
-                  0x000cea                  _LCDIsBusy
-                  0x000d1c                  _InitializeLCM
-                  0x000d66                  _LCD_Cursor_Classic
-                  0x000db2                  _LCD_Cursor_New
-                  0x000dfe                  _putcLCD
-                  0x000e0a                  _putsLCD
-                  0x000e24                  _putrsLCD
-                  0x000e46                  _LCD_Delay200usX
-                  0x000e60                  _LCD_Delay200us
-                  0x000e76                  _datareadLCD
-                  0x000ebe                  _cmdreadLCD
-                  0x000efe                  _LCD_WriteData
-                  0x000fea                  _LCD_Command_4b
-                  0x001066                  _LCD_Command
-                  0x001152                  _LCD_E_Delay
-                  0x001168                  _num2char
-                  0x0011e2                  _LCD_start
-                  0x001232                  _LCD_clear
-                  0x001260                  _LCD_clearAline
-                  0x0012b2                  _LCD_PrintResult
-                  0x00134a                  _delay
-                  0x00136c                  _delay200usX
-                  0x001394                  _ADconvert
-                  0x0013ac                  _main
-                  0x00143a                  _initPLL
-                  0x00148e                  _initIO
-                  0x0014c0                  _init_ADC1
+                  0x000cba                  _LCDIsBusy
+                  0x000cec                  _InitializeLCM
+                  0x000d36                  _LCD_Cursor_Classic
+                  0x000d82                  _LCD_Cursor_New
+                  0x000dce                  _putcLCD
+                  0x000dda                  _putsLCD
+                  0x000df4                  _putrsLCD
+                  0x000e16                  _LCD_Delay200usX
+                  0x000e30                  _LCD_Delay200us
+                  0x000e46                  _datareadLCD
+                  0x000e8e                  _cmdreadLCD
+                  0x000ece                  _LCD_WriteData
+                  0x000fba                  _LCD_Command_4b
+                  0x001036                  _LCD_Command
+                  0x001122                  _LCD_E_Delay
+                  0x001138                  _delay
+                  0x00115a                  _delay200usX
+                  0x001182                  _initPLL
+                  0x0011d6                  _PORTS_Test_Initial
+                  0x001224                  _main
+                  0x00131e                  _keypad_init
+                  0x00133a                  _keypad_Scan
+                  0x0013ac                  _keypad_GetButton
+                  0x0013e2                  _keypad_task
+                  0x001426                  _T1_Initial
+                  0x00143e                  __T1Interrupt
+                  0x0014c2                  _ADC1_Initial
 
 External Symbols in Program Memory (by name):
 
-                  0x001394                  _ADconvert
-                  0x000d1c                  _InitializeLCM
-                  0x000cea                  _LCDIsBusy
-                  0x001066                  _LCD_Command
-                  0x000fea                  _LCD_Command_4b
-                  0x000d66                  _LCD_Cursor_Classic
-                  0x000db2                  _LCD_Cursor_New
-                  0x000e60                  _LCD_Delay200us
-                  0x000e46                  _LCD_Delay200usX
-                  0x001152                  _LCD_E_Delay
-                  0x0012b2                  _LCD_PrintResult
-                  0x000efe                  _LCD_WriteData
-                  0x001232                  _LCD_clear
-                  0x001260                  _LCD_clearAline
-                  0x0011e2                  _LCD_start
+                  0x0014c2                  _ADC1_Initial
+                  0x000cec                  _InitializeLCM
+                  0x000cba                  _LCDIsBusy
+                  0x001036                  _LCD_Command
+                  0x000fba                  _LCD_Command_4b
+                  0x000d36                  _LCD_Cursor_Classic
+                  0x000d82                  _LCD_Cursor_New
+                  0x000e30                  _LCD_Delay200us
+                  0x000e16                  _LCD_Delay200usX
+                  0x001122                  _LCD_E_Delay
+                  0x000ece                  _LCD_WriteData
+                  0x0011d6                  _PORTS_Test_Initial
+                  0x001426                  _T1_Initial
                   0x00029e                  __DefaultInterrupt
                   0x000668                  __Litob
                   0x0008c6                  __Puttxt
+                  0x00143e                  __T1Interrupt
                   0x000a3e                  __Vacopy
                   0x0002ce                  ___Printf_cdnopuxX
                   0x000432                  ___Putfld_cdnopuxX
@@ -219,19 +220,20 @@ External Symbols in Program Memory (by name):
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
                   0x0002b0                  __sprintf_cdnopuxX
-                  0x000ebe                  _cmdreadLCD
-                  0x000e76                  _datareadLCD
-                  0x00134a                  _delay
-                  0x00136c                  _delay200usX
-                  0x00148e                  _initIO
-                  0x00143a                  _initPLL
-                  0x0014c0                  _init_ADC1
-                  0x0013ac                  _main
+                  0x000e8e                  _cmdreadLCD
+                  0x000e46                  _datareadLCD
+                  0x001138                  _delay
+                  0x00115a                  _delay200usX
+                  0x001182                  _initPLL
+                  0x0013ac                  _keypad_GetButton
+                  0x00133a                  _keypad_Scan
+                  0x00131e                  _keypad_init
+                  0x0013e2                  _keypad_task
+                  0x001224                  _main
                   0x000642                  _memcpy
-                  0x001168                  _num2char
-                  0x000dfe                  _putcLCD
-                  0x000e24                  _putrsLCD
-                  0x000e0a                  _putsLCD
+                  0x000dce                  _putcLCD
+                  0x000df4                  _putrsLCD
+                  0x000dda                  _putsLCD
                   0x000650                  _strchr
                   0x0002a2                  sprintf_cdnopuxX.XXeo:_prout
 
@@ -260,9 +262,11 @@ FUID3            0xf80016           0x000002
 
 Linker script and memory map
 
-LOAD build/default/production/newmainXC16.o
-LOAD build/default/production/config.o
 LOAD build/default/production/LCD.o
+LOAD build/default/production/keypad.o
+LOAD build/default/production/main.o
+LOAD build/default/production/timer.o
+LOAD build/default/production/adc.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/dsPIC33F\libp33FJ256MC710-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libfx-elf.a
@@ -369,23 +373,29 @@ __FBS
 __FSS
  *(__FSS.sec*)
 
-__FGS
+__FGS             0xf80004          0x2
  *(__FGS.sec*)
+ __FGS.sec        0xf80004          0x2 build/default/production/main.o
 
-__FOSCSEL
+__FOSCSEL         0xf80006          0x2
  *(__FOSCSEL.sec*)
+ __FOSCSEL.sec    0xf80006          0x2 build/default/production/main.o
 
-__FOSC
+__FOSC            0xf80008          0x2
  *(__FOSC.sec*)
+ __FOSC.sec       0xf80008          0x2 build/default/production/main.o
 
-__FWDT
+__FWDT            0xf8000a          0x2
  *(__FWDT.sec*)
+ __FWDT.sec       0xf8000a          0x2 build/default/production/main.o
 
-__FPOR
+__FPOR            0xf8000c          0x2
  *(__FPOR.sec*)
+ __FPOR.sec       0xf8000c          0x2 build/default/production/main.o
 
-__FICD
+__FICD            0xf8000e          0x2
  *(__FICD.sec*)
+ __FICD.sec       0xf8000e          0x2 build/default/production/main.o
 
 __FUID0
  *(__FUID0.sec*)
@@ -402,36 +412,46 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x1f2d
+.debug_info       0x000000       0x2d9a
  *(.debug_info)
- .debug_info      0x000000        0x662 build/default/production/newmainXC16.o
- .debug_info      0x000662        0xe66 build/default/production/config.o
- .debug_info      0x0014c8        0xa65 build/default/production/LCD.o
+ .debug_info      0x000000        0x8d9 build/default/production/LCD.o
+ .debug_info      0x0008d9        0x54e build/default/production/keypad.o
+ .debug_info      0x000e27       0x101f build/default/production/main.o
+ .debug_info      0x001e46        0x617 build/default/production/timer.o
+ .debug_info      0x00245d        0x93d build/default/production/adc.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x44d
+.debug_abbrev     0x000000        0x5c1
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x11a build/default/production/newmainXC16.o
- .debug_abbrev    0x00011a        0x14d build/default/production/config.o
- .debug_abbrev    0x000267        0x1e6 build/default/production/LCD.o
+ .debug_abbrev    0x000000        0x1a6 build/default/production/LCD.o
+ .debug_abbrev    0x0001a6         0xd9 build/default/production/keypad.o
+ .debug_abbrev    0x00027f        0x185 build/default/production/main.o
+ .debug_abbrev    0x000404        0x105 build/default/production/timer.o
+ .debug_abbrev    0x000509         0xb8 build/default/production/adc.o
 
-.debug_line       0x000000        0xe4c
+.debug_line       0x000000        0xf70
  *(.debug_line)
- .debug_line      0x000000        0x1f5 build/default/production/newmainXC16.o
- .debug_line      0x0001f5        0x246 build/default/production/config.o
- .debug_line      0x00043b        0xa11 build/default/production/LCD.o
+ .debug_line      0x000000        0x71c build/default/production/LCD.o
+ .debug_line      0x00071c        0x270 build/default/production/keypad.o
+ .debug_line      0x00098c        0x350 build/default/production/main.o
+ .debug_line      0x000cdc        0x14d build/default/production/timer.o
+ .debug_line      0x000e29        0x147 build/default/production/adc.o
 
-.debug_frame      0x000000        0x218
+.debug_frame      0x000000        0x2c4
  *(.debug_frame)
- .debug_frame     0x000000         0x54 build/default/production/newmainXC16.o
- .debug_frame     0x000054         0x44 build/default/production/config.o
- .debug_frame     0x000098        0x180 build/default/production/LCD.o
+ .debug_frame     0x000000        0x104 build/default/production/LCD.o
+ .debug_frame     0x000104         0x78 build/default/production/keypad.o
+ .debug_frame     0x00017c         0xf0 build/default/production/main.o
+ .debug_frame     0x00026c         0x34 build/default/production/timer.o
+ .debug_frame     0x0002a0         0x24 build/default/production/adc.o
 
-.debug_str        0x000000         0xff
+.debug_str        0x000000        0x141
  *(.debug_str)
- .debug_str       0x000000         0x35 build/default/production/newmainXC16.o
- .debug_str       0x000035         0x5b build/default/production/config.o
- .debug_str       0x000090         0x6f build/default/production/LCD.o
+ .debug_str       0x000000         0x65 build/default/production/LCD.o
+ .debug_str       0x000065         0x13 build/default/production/keypad.o
+ .debug_str       0x000078         0x55 build/default/production/main.o
+ .debug_str       0x0000cd         0x1c build/default/production/timer.o
+ .debug_str       0x0000e9         0x58 build/default/production/adc.o
 
 .debug_loc
  *(.debug_loc)
@@ -440,26 +460,34 @@ __FUID3
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x221
+                  0x000000        0x2a5
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x50 build/default/production/newmainXC16.o
+                  0x000000        0x13c build/default/production/LCD.o
  .debug_pubnames
-                  0x000050         0x37 build/default/production/config.o
+                  0x00013c         0x57 build/default/production/keypad.o
  .debug_pubnames
-                  0x000087        0x19a build/default/production/LCD.o
+                  0x000193         0x96 build/default/production/main.o
+ .debug_pubnames
+                  0x000229         0x59 build/default/production/timer.o
+ .debug_pubnames
+                  0x000282         0x23 build/default/production/adc.o
 
 .debug_ranges
  *(.debug_ranges)
 
-.debug_aranges    0x000000         0x48
+.debug_aranges    0x000000         0x78
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/newmainXC16.o
+                  0x000000         0x18 build/default/production/LCD.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/config.o
+                  0x000018         0x18 build/default/production/keypad.o
  .debug_aranges
-                  0x000030         0x18 build/default/production/LCD.o
+                  0x000030         0x18 build/default/production/main.o
+ .debug_aranges
+                  0x000048         0x18 build/default/production/timer.o
+ .debug_aranges
+                  0x000060         0x18 build/default/production/adc.o
 
 .ivt              0x000004         0xfc
                   0x000004          0x4 LONG 0x29e DEFINED (__ReservedTrap0)?ABSOLUTE (__ReservedTrap0):ABSOLUTE (__DefaultInterrupt)
@@ -473,7 +501,7 @@ __FUID3
                   0x000014          0x4 LONG 0x29e DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000016          0x4 LONG 0x29e DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000018          0x4 LONG 0x29e DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00001a          0x4 LONG 0x29e DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00001a          0x4 LONG 0x143e DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00001c          0x4 LONG 0x29e DEFINED (__DMA0Interrupt)?ABSOLUTE (__DMA0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00001e          0x4 LONG 0x29e DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x29e DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -601,7 +629,7 @@ __FUID3
                   0x000114          0x4 LONG 0x29e DEFINED (__AltINT0Interrupt)?ABSOLUTE (__AltINT0Interrupt):DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000116          0x4 LONG 0x29e DEFINED (__AltIC1Interrupt)?ABSOLUTE (__AltIC1Interrupt):DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000118          0x4 LONG 0x29e DEFINED (__AltOC1Interrupt)?ABSOLUTE (__AltOC1Interrupt):DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00011a          0x4 LONG 0x29e DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00011a          0x4 LONG 0x143e DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00011c          0x4 LONG 0x29e DEFINED (__AltDMA0Interrupt)?ABSOLUTE (__AltDMA0Interrupt):DEFINED (__DMA0Interrupt)?ABSOLUTE (__DMA0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00011e          0x4 LONG 0x29e DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000120          0x4 LONG 0x29e DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -2017,136 +2045,117 @@ LOAD c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30
 LOAD c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
-OUTPUT(dist/default/production/mcu_12_4.X.production.elf elf32-pic30)
+OUTPUT(dist/default/production/Lab3-ADC.X.production.elf elf32-pic30)
 LOAD jump_table
 LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000048        0x1be
+                  0x000078        0x2cb
  .debug_pubtypes
-                  0x000048         0x73 build/default/production/newmainXC16.o
+                  0x000078         0x4c build/default/production/LCD.o
  .debug_pubtypes
-                  0x0000bb         0xff build/default/production/config.o
+                  0x0000c4         0x4e build/default/production/keypad.o
  .debug_pubtypes
-                  0x0001ba         0x4c build/default/production/LCD.o
+                  0x000112         0xed build/default/production/main.o
+ .debug_pubtypes
+                  0x0001ff         0x83 build/default/production/timer.o
+ .debug_pubtypes
+                  0x000282         0xc1 build/default/production/adc.o
 
 __c30_signature
-                  0x000206         0x66
+                  0x000343         0x72
  __c30_signature
-                  0x000206          0x6 build/default/production/newmainXC16.o
+                  0x000343          0x6 build/default/production/LCD.o
  __c30_signature
-                  0x00020c          0x6 build/default/production/config.o
+                  0x000349          0x6 build/default/production/keypad.o
  __c30_signature
-                  0x000212          0x6 build/default/production/LCD.o
+                  0x00034f          0x6 build/default/production/main.o
  __c30_signature
-                  0x000218          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+                  0x000355          0x6 build/default/production/timer.o
  __c30_signature
-                  0x00021e          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+                  0x00035b          0x6 build/default/production/adc.o
  __c30_signature
-                  0x000224          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(sprintf_cdnopuxX.XXeo)
+                  0x000361          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x00022a          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
+                  0x000367          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
  __c30_signature
-                  0x000230          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xputfld_cdnopuxX.XXeo)
+                  0x00036d          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(sprintf_cdnopuxX.XXeo)
  __c30_signature
-                  0x000236          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(memcpy.XXeo)
+                  0x000373          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
  __c30_signature
-                  0x00023c          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(strchr.XXeo)
+                  0x000379          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xputfld_cdnopuxX.XXeo)
  __c30_signature
-                  0x000242          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xlitob.XXeo)
+                  0x00037f          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(memcpy.XXeo)
  __c30_signature
-                  0x000248          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xputtxt.XXeo)
+                  0x000385          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(strchr.XXeo)
  __c30_signature
-                  0x00024e          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xvacopy.XXeo)
+                  0x00038b          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xlitob.XXeo)
  __c30_signature
-                  0x000254          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libm-elf.a(divsi3.eo)
+                  0x000391          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xputtxt.XXeo)
  __c30_signature
-                  0x00025a          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+                  0x000397          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xvacopy.XXeo)
  __c30_signature
-                  0x000260          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
+                  0x00039d          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libm-elf.a(divsi3.eo)
  __c30_signature
-                  0x000266          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libm-elf.a(divmoddi3.eo)
+                  0x0003a3          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+ __c30_signature
+                  0x0003a9          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
+ __c30_signature
+                  0x0003af          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libm-elf.a(divmoddi3.eo)
 
-.nbss               0x0800          0x6
- .nbss              0x0800          0x6 build/default/production/LCD.o
-                    0x0800                  _LCD_DATA
-                    0x0802                  _LCD_StatusByte
-                    0x0804                  _Return_Data
+.nbss               0x0800         0x14
+ .nbss              0x0800          0xc build/default/production/timer.o
+                    0x0800                  _t1_counter
+                    0x0802                  _time_sec
+                    0x0804                  _timer1
+ .nbss              0x080c          0x6 build/default/production/LCD.o
+                    0x080c                  _LCD_DATA
+                    0x080e                  _LCD_StatusByte
+                    0x0810                  _Return_Data
+ .nbss              0x0812          0x2 build/default/production/keypad.o
 
-.ndata              0x0806          0x2
- .ndata             0x0806          0x2 build/default/production/LCD.o
-                    0x0806                  _clear_str
+.data               0x0814         0x3c
+ .data              0x0814         0x22 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xlitob.XXeo)
+ .data              0x0836         0x1a c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
 
-.bss                0x0808         0x50
- .bss               0x0808         0x50 build/default/production/newmainXC16.o
-                    0x0808                  _ADresult
+.const              0x8c8a         0x30 load address 0x000c8a  
+ .const             0x8c8a         0x2c build/default/production/main.o
+ .const             0x8cb6          0x4 build/default/production/keypad.o
 
-.data               0x0858         0x3c
- .data              0x0858         0x22 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xlitob.XXeo)
- .data              0x087a         0x1a c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
+.text             0x000cba        0x862
+ .text            0x000cba        0x47e build/default/production/LCD.o
+                  0x000cba                  _LCDIsBusy
+                  0x000cec                  _InitializeLCM
+                  0x000d36                  _LCD_Cursor_Classic
+                  0x000d82                  _LCD_Cursor_New
+                  0x000dce                  _putcLCD
+                  0x000dda                  _putsLCD
+                  0x000df4                  _putrsLCD
+                  0x000e16                  _LCD_Delay200usX
+                  0x000e30                  _LCD_Delay200us
+                  0x000e46                  _datareadLCD
+                  0x000e8e                  _cmdreadLCD
+                  0x000ece                  _LCD_WriteData
+                  0x000fba                  _LCD_Command_4b
+                  0x001036                  _LCD_Command
+                  0x001122                  _LCD_E_Delay
+ .text            0x001138        0x1e6 build/default/production/main.o
+                  0x001138                  _delay
+                  0x00115a                  _delay200usX
+                  0x001182                  _initPLL
+                  0x0011d6                  _PORTS_Test_Initial
+                  0x001224                  _main
+ .text            0x00131e        0x108 build/default/production/keypad.o
+                  0x00131e                  _keypad_init
+                  0x00133a                  _keypad_Scan
+                  0x0013ac                  _keypad_GetButton
+                  0x0013e2                  _keypad_task
+ .text            0x001426         0x9c build/default/production/timer.o
+                  0x001426                  _T1_Initial
+                  0x00143e                  __T1Interrupt
+ .text            0x0014c2         0x5a build/default/production/adc.o
+                  0x0014c2                  _ADC1_Initial
 
-.config_JTAGEN    0xf8000e          0x2
- .config_JTAGEN
-                  0xf8000e          0x2 build/default/production/newmainXC16.o
-
-.config_PWMPIN    0xf8000c          0x2
- .config_PWMPIN
-                  0xf8000c          0x2 build/default/production/newmainXC16.o
-
-.config_FWDTEN    0xf8000a          0x2
- .config_FWDTEN
-                  0xf8000a          0x2 build/default/production/newmainXC16.o
-
-.config_FCKSM     0xf80008          0x2
- .config_FCKSM    0xf80008          0x2 build/default/production/newmainXC16.o
-
-.config_IESO      0xf80006          0x2
- .config_IESO     0xf80006          0x2 build/default/production/newmainXC16.o
-
-.config_GSS       0xf80004          0x2
- .config_GSS      0xf80004          0x2 build/default/production/newmainXC16.o
-
-.config_RSS       0xf80002          0x2
- .config_RSS      0xf80002          0x2 build/default/production/newmainXC16.o
-
-.config_RBS       0xf80000          0x2
- .config_RBS      0xf80000          0x2 build/default/production/newmainXC16.o
-
-.const              0x8c8a         0x60 load address 0x000c8a  
- .const             0x8c8a         0x60 build/default/production/LCD.o
-
-.text             0x000cea        0x838
- .text            0x000cea        0x660 build/default/production/LCD.o
-                  0x000cea                  _LCDIsBusy
-                  0x000d1c                  _InitializeLCM
-                  0x000d66                  _LCD_Cursor_Classic
-                  0x000db2                  _LCD_Cursor_New
-                  0x000dfe                  _putcLCD
-                  0x000e0a                  _putsLCD
-                  0x000e24                  _putrsLCD
-                  0x000e46                  _LCD_Delay200usX
-                  0x000e60                  _LCD_Delay200us
-                  0x000e76                  _datareadLCD
-                  0x000ebe                  _cmdreadLCD
-                  0x000efe                  _LCD_WriteData
-                  0x000fea                  _LCD_Command_4b
-                  0x001066                  _LCD_Command
-                  0x001152                  _LCD_E_Delay
-                  0x001168                  _num2char
-                  0x0011e2                  _LCD_start
-                  0x001232                  _LCD_clear
-                  0x001260                  _LCD_clearAline
-                  0x0012b2                  _LCD_PrintResult
- .text            0x00134a         0xf0 build/default/production/newmainXC16.o
-                  0x00134a                  _delay
-                  0x00136c                  _delay200usX
-                  0x001394                  _ADconvert
-                  0x0013ac                  _main
- .text            0x00143a         0xe8 build/default/production/config.o
-                  0x00143a                  _initPLL
-                  0x00148e                  _initIO
-                  0x0014c0                  _init_ADC1
-
-.dinit            0x001522         0x4c
- .dinit           0x001522         0x4c data_init
+.dinit            0x00151c         0x4a
+ .dinit           0x00151c         0x4a data_init

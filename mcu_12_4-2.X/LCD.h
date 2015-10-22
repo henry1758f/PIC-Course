@@ -38,7 +38,14 @@ void    LCD_Command_4b(unsigned char Command);
 void	LCD_Command(unsigned char) ;
 unsigned char 	datareadLCD(void) ;
 unsigned char	cmdreadLCD(void) ;
-void LCD_start(void);
-void LCD_clear(void);
-void LCD_clearAline(unsigned char);
-void LCD_PrintResult(unsigned char posY,unsigned int value);
+
+
+
+/*
+#pragma .userconstants
+const  unsigned char DEMAND_TITLE1[6]={"Solar"};
+const  unsigned char DEMAND_TITLE2[8]={"Control"};
+const  unsigned char DEMAND_TITLE3[7]={"System"};
+const  unsigned char DEMAND_TITLE4[10]={"Ver. 2.06"};
+#pragma 
+*/
