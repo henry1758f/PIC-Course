@@ -83,6 +83,9 @@ void init_ADC1(void)    //ADC1
     AD1CHS0bits.CH0NB = 0; // Select VREF- for CH0 -ve inputs
     AD1CHS123bits.CH123SB = 1; // CH1 positive input is AN3, CH2 positive input is AN4, CH3 positive input is AN5
     AD1CHS123bits.CH123NB = 0; // Select VREF- for CH1 -ve inputs
+    
+    AD1CON3bits.ADRC = 0;
+    AD1CON3bits.ADCS = 0x0F;
 
     AD1CHS0bits.CH0SA= 0x0006;               /* analog input AN6 */
 

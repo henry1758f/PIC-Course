@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/default/production/mcu_12_4.X.production.elf">
+  <executable name="dist/default/production/Lab4-PWM.X.production.elf">
     <memory name="data">
       <units>bytes</units>
       <length>30720</length>
-      <used>148</used>
-      <free>30572</free>
+      <used>80</used>
+      <free>30640</free>
     </memory>
     <memory name="program">
       <units>bytes</units>
       <length>261888</length>
-      <used>7470</used>
-      <free>254418</free>
+      <used>8568</used>
+      <free>253320</free>
     </memory>
   </executable>
 </project>
