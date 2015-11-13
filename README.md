@@ -19,12 +19,12 @@ ADC作業
   - [ ] Display result on LCD                 顯示ADC結果在LCD上面
   - [ ] Digital filter is necessary           必須要做數位濾波處理
 
-### ADC2
-  - [ ] 12 bits mode, 1 channel               12位元解析模式，1個ADC通道
-  - [ ] Manual sample, Automatic conversion   要手動採樣、自動轉換
-  - [ ] Read AN12, AN13, AN14, AN15 pins      讀取AN12、AN13、AN14、AN15腳位
-  - [ ] Display result on LCD                 顯示ADC結果在LCD上面
-  - [ ] Digital filter is necessary           必須要做數位濾波處理
+### ADC2  因應作業繳交期限，先修改老師的程式繳交 mcu12_4_2 (作者Lilyo)
+  - [x] 12 bits mode, 1 channel               12位元解析模式，1個ADC通道
+  - [x] Manual sample, Automatic conversion   要手動採樣、自動轉換
+  - [x] Read AN12, AN13, AN14, AN15 pins      讀取AN12、AN13、AN14、AN15腳位
+  - [x] Display result on LCD                 顯示ADC結果在LCD上面
+  - [x] Digital filter is necessary           必須要做數位濾波處理
 
 ### 自行添加
   - [ ] Nope!
