@@ -7,6 +7,31 @@ NKUAS Department of Electric Engineering ,Microcontroller course Homework Series
 
 Using 16bits DSP(dsPIC33FJ256MC710) development board
 
+## mcu_12_7  /2015/11/25
+SPI
+透過SPI存取開發版上的RTC "DS3234"
+  - [ ] 確認 Real Time Clock IC 正常動作
+  - [ ] SPI Driver 是否正確(Mode, Clock)
+  - [ ] 找到正確的 SPI chip select
+  - [ ] 檢查讀入值符合 DS3234 Datasheet 說明
+  - [ ] DS3234 是用 BCD 存取
+  - [ ] 完成所需要的 DS3234 RTC API 
+  - [ ] 可使用鍵盤設定年、月、日(雙數組)
+  - 
+## mcu_12_6  /2015/11/25
+正弦波產生器
+  - [ ] 動態調整PWM Duty Cycle
+  - [ ] RC濾波後輸出正弦波
+  - [ ] 頻率由可變電組調整
+  - [ ] 正弦波頻率範圍20~50 Hz
+  - [ ] 經過放大可使弦波 Vpp 超過 3.3V
+  - [ ] 經過箝位電路可以有正負輸出
+  - [ ] 使用自己的硬體驗收
+
+## mcu_12_5  /2015/11/06
+PWM控制
+作者為Lilyo
+
 ## mcu_12_4  /2015/10/16
 ADC作業
 目前正在努力達成ADC1的部分!
@@ -28,7 +53,8 @@ ADC作業
 
 ### 自行添加
   - [ ] Nope!
-
+###最後結果
+  ADC數值錯誤。
 
 ## mcu_12_3  /2015/10/02
 使用 LCD 與 Keypad 撰寫計算機
