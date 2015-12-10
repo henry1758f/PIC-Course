@@ -11,7 +11,7 @@
 
 #include <xc.h>
 #include "uart.h"
-#define OPEN_STRING "MCU12_8 USART is READY!!\n"
+#define OPEN_STRING "MCU12_8 UART is READY!!\n"
 
 // FBS
 #pragma config BWRP = WRPROTECT_OFF     // Boot Segment Write Protect (Boot Segment may be written)

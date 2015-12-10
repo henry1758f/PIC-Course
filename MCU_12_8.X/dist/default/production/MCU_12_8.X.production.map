@@ -235,16 +235,16 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x12c6
+.debug_info       0x000000       0x12b8
  *(.debug_info)
- .debug_info      0x000000        0x7b9 build/default/production/main.o
- .debug_info      0x0007b9        0xb0d build/default/production/uart.o
+ .debug_info      0x000000        0x7ab build/default/production/main.o
+ .debug_info      0x0007ab        0xb0d build/default/production/uart.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x26c
+.debug_abbrev     0x000000        0x25d
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x160 build/default/production/main.o
- .debug_abbrev    0x000160        0x10c build/default/production/uart.o
+ .debug_abbrev    0x000000        0x151 build/default/production/main.o
+ .debug_abbrev    0x000151        0x10c build/default/production/uart.o
 
 .debug_line       0x000000        0x3d6
  *(.debug_line)
