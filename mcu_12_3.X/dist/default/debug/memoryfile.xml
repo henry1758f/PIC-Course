@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+  <executable name="dist/default/debug/mcu_12_3.X.debug.elf">
+    <memory name="data">
+      <units>bytes</units>
+      <length>30720</length>
+      <used>106</used>
+      <free>30614</free>
+    </memory>
+    <memory name="program">
+      <units>bytes</units>
+      <length>261888</length>
+      <used>8805</used>
+      <free>253083</free>
+    </memory>
+  </executable>
+</project>
