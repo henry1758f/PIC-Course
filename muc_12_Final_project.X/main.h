@@ -16,5 +16,11 @@ extern mytime_t        timer1;
 
 void T1_Initial(void);
 void ADC1_Initial(void);
+void PORTS_Test_Initial(void);
+void initPLL(void);
+void delay200usX(unsigned long);
+void delay(unsigned long);
+
+int ADC_read(unsigned char,unsigned char);
 
 #endif	/* _MAIN_H */

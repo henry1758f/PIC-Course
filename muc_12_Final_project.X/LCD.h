@@ -38,7 +38,9 @@ void    LCD_Command_4b(unsigned char Command);
 void	LCD_Command(unsigned char) ;
 unsigned char 	datareadLCD(void) ;
 unsigned char	cmdreadLCD(void) ;
-
+void LCD_start();
+void LCD_clear();
+void LCD_ClearAline(unsigned line);
 
 
 /*

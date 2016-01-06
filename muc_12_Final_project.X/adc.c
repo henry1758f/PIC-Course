@@ -4,15 +4,18 @@
 /* auto sample, manual covert */
 void ADC1_Initial(void)
 {
-    AD1PCFGL = 0xFFFE;
+    AD1PCFGL = 0xFF81;
     AD1PCFGH = 0xFFFF;
+    
+    AD1CSSH = 0x0000;
     
     AD1CON1 = 0x0000;
     AD1CON1bits.SAMP = 0;           /* ADC Sample Enable */
     AD1CON1bits.ASAM = 1;           /* ADC Sample Auto-Start */
-    AD1CON1bits.AD12B = 1;          /* 12-Bit Operation Mode */
+    AD1CON1bits.AD12B = 1;          /* 10-Bit Operation Mode */
     AD1CON1bits.FORM = 0;           /* output format: unsigned int */
     AD1CON1bits.SIMSAM = 0;         /* Simultaneous Sample Select */
+    AD1CON1bits.SSRC = 0;
 
     AD1CON2 = 0x0000;
     AD1CON2bits.VCFG = 0x0;         /* Voltage reference is AVdd and AVss*/
@@ -28,7 +31,9 @@ void ADC1_Initial(void)
 
     AD1CHS123 = 0x0000;
 
-    AD1CHS0bits.CH0SA= 0x0000;               /* analog input 0 */
+    AD1CHS0 = 0x0000;
+    AD1CHS0bits.CH0NA = 0;
+    //AD1CHS0bits.CH0SA= 0x0000;               /* analog input 0 */
 
 
 

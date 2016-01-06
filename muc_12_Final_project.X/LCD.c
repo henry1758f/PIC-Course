@@ -333,3 +333,44 @@ void	LCD_E_Delay(void)
 		for ( E_Loop = 0 ; E_Loop < CPU_FCY * 5 ; E_Loop ++ ) ;
 }
 
+void LCD_start()
+{
+    unsigned char str1[21]="   = MCU Course =   ",
+                  str2[21]="       TEAM 12      ",
+                  str3[21]="     2016/01/07     ";
+    LCD_Cursor_New(0, 0);
+    putsLCD((unsigned char*)str1);
+    LCD_Cursor_New(1, 0);
+    putsLCD((unsigned char*)str2);
+    LCD_Cursor_New(2, 0);
+    putsLCD("                    ");
+    LCD_Cursor_New(3, 0);
+    putsLCD((unsigned char*)str3);
+    
+}
+
+void LCD_clear()
+{
+    LCD_Cursor_New(0, 0);
+    putsLCD("                    ");
+    LCD_Cursor_New(1, 0);
+    putsLCD("                    ");
+    LCD_Cursor_New(2, 0);
+    putsLCD("                    ");
+    LCD_Cursor_New(3, 0);
+    putsLCD("                    ");
+}
+
+void LCD_ClearAline(unsigned line)
+{
+    if(line>4)
+    {
+        LCD_Command(LCD_CLR) ;	//must >=4.6ms
+        LCD_Delay200usX(60) ;
+    }
+    else
+    {
+        LCD_Cursor_New(line, 0);
+        putsLCD("                    ");
+    }
+}

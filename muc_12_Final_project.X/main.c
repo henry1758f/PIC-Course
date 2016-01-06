@@ -3,7 +3,10 @@
 #include "main.h"
 #include "keypad.h"
 #include "LCD.h"
+
 #define times 10000
+#define DIVCOUNT 8
+
 /****************** CRITICAL SETUP, MODIFY THEM CAREFULLY *******************/
 //F80000 0x00CF
 //F80002 0x00CF
@@ -78,11 +81,11 @@ void PORTS_Test_Initial(void)
     PORTA = 0xffff;
     TRISA = 0x0000;
     PORTA = 0xffff;
-    LATA=0xffffff;
+    LATA  = 0xffff;
     
-    PORTB = 0xffff;
+    PORTB = 0x0000;
     TRISB = 0xffff;
-    PORTB = 0xffff;
+    PORTB = 0x0000;
 
     PORTC = 0xffff;
     TRISC = 0x0000;
@@ -103,17 +106,15 @@ void PORTS_Test_Initial(void)
     PORTG = 0xffff;
     TRISG = 0x0000;
     PORTG = 0xffff;
-    LATG=0xffffff;
+    LATG  = 0xffff;
 }
 
 int main(void)
 {
     char            str[32];
-    long int             ad_val_12,ad_val_13,ad_val_14,ad_val_15;
     unsigned int ad[4][10],i;
     RCONbits.SWDTEN = 0;			//disable Watch dog timer
     initPLL();
-
     while (OSCCONbits.CF == 1);			//check clock failed
     while (OSCCONbits.COSC != 0b011);           // Wait for Clock switch to occur
     while (OSCCONbits.LOCK == 0);		//check PLL locked
@@ -123,20 +124,53 @@ int main(void)
     ADC1_Initial();
     InitializeLCM();
     LATDbits.LATD11 = 1;                        /* turn the LCM back light */
-    ser1=100;
-    ser2=100;
-    ser3=100;
-    ser4=100;
-    ser5=100;
-    ser6=100;
+    ser1=0;
+    ser2=0;
+    ser3=0;
+    ser4=0;
+    ser5=0;
+    ser6=0;
+    LCD_start();
+    LCD_Delay200usX(5000);
+    LCD_clear();
+    LCD_Delay200usX(5000);
     while (1) 
     {
-
+        ser1 = ADC_read(1,DIVCOUNT);
+        ser2 = ADC_read(2,DIVCOUNT);
+        ser3 = ADC_read(3,DIVCOUNT);
+        ser4 = ADC_read(4,DIVCOUNT);
+        ser5 = ADC_read(5,DIVCOUNT);
+        ser6 = ADC_read(6,DIVCOUNT);
         LCD_Cursor_New(0, 0);
-        sprintf(str, "timer1.count: %d",timer1.count);
+        //sprintf(str, "timer1.count: %d  ",timer1.count);
+        //putsLCD((unsigned char*)str);
+        putsLCD("Final Prj. TEAM 12  ");
+        LCD_Cursor_New(1, 0);
+        sprintf(str, "AD1: %5d AD2:%5d",ser1,ser2);
         putsLCD((unsigned char*)str);
-
+        LCD_Cursor_New(2, 0);
+        sprintf(str, "AD3: %5d AD4:%5d",ser3,ser4);
+        putsLCD((unsigned char*)str);
+        LCD_Cursor_New(3, 0);
+        sprintf(str, "AD5: %5d AD6:%5d",ser5,ser6);
+        putsLCD((unsigned char*)str);
     }
 }
 
+int ADC_read(unsigned char AN_select,unsigned char div)
+{
+    int i = 0;
+    double accr = 0;
+    
+    for(i = div;i>0;i--)
+    {
+        AD1CHS0bits.CH0SA= AN_select;
+        AD1CON1bits.SAMP = 0;           //Start Conversion
+        while (!AD1CON1bits.DONE);      //wait for A/D convrsion complete
+        accr += ADC1BUF0;
+    }
+    accr = accr / div;
+    return accr;
+}
 
