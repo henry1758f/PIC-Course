@@ -1,5 +1,5 @@
 ﻿# PIC-Course
-高應大電機系 微處理機課程作業系列 林世允 講師
+高應大電機系 微處理機課程作業系列 林士允 講師
 
 NKUAS Department of Electric Engineering ,Microcontroller course Homework Series ,Instructor:S.Y.Lin
 
